@@ -22,32 +22,27 @@ export default function Menu() {
       />
       {open && (
         <div className="bg-black text-white absolute top-16 left-0 w-full h-[calc(100vh-4rem)] flex flex-col items-center justify-around text-lg py-20">
-          <Link href="/" className="hover:text-red-400" onClick={handleClick}>
+          <Link
+            href="/"
+            className="hover:text-gold ease-in-out duration-300 active:scale-95"
+            onClick={handleClick}
+          >
             Kezdőlap
           </Link>
-          <Link
-            href="/termekek?nem=noi"
-            className="hover:text-red-400"
-            onClick={handleClick}
-          >
-            Női
-          </Link>
-          <Link
-            href="/termekek?nem=ferfi"
-            className="hover:text-red-400"
-            onClick={handleClick}
-          >
-            Férfi
-          </Link>
+
           <Link
             href="/fiok"
-            className="hover:text-red-400"
+            className="hover:text-gold ease-in-out duration-300 active:scale-95"
             onClick={handleClick}
           >
             Fiók
           </Link>
           <MobilKosarLink />
-          <Link href="/" className="hover:text-red-400" onClick={handleClick}>
+          <Link
+            href="/"
+            className="hover:text-gold ease-in-out duration-300 active:scale-95"
+            onClick={handleClick}
+          >
             Kijelentkezés
           </Link>
         </div>

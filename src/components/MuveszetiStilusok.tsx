@@ -54,7 +54,7 @@ export default function MuveszetiStilusok() {
               item.id > 4 ? "hidden xl:block" : ""
             }`}
           >
-            <Link href={`/termekek?kategoria=${item.name}`}>
+            <Link href={`/termekek?stilus=${item.name}`}>
               <Image
                 src={item.image}
                 alt=""
