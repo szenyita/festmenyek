@@ -4,7 +4,6 @@ export default function MobilKosarOldal() {
   return (
     <div className="pt-4 text-black w-full flex flex-col items-center justify-center">
       <h2 className="text-3xl font-semibold mb-6">Kosár Tartalma</h2>
-
       <div className="w-full flex flex-col gap-4 items-center">
         <div className="w-8/12 border-gray-300 border-2 rounded-md overflow-hidden">
           <Image
@@ -17,10 +16,6 @@ export default function MobilKosarOldal() {
           <div className="p-2">
             <div className="flex justify-between">
               <p className="font-semibold text-xl">Kutyus</p>
-              <p className="text-xl">20.000 Ft</p>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-lg text-gray-500">1 db</p>
               <Image
                 src="/kuka.svg"
                 alt=""
@@ -28,6 +23,9 @@ export default function MobilKosarOldal() {
                 width={22}
                 className="cursor-pointer"
               />
+            </div>
+            <div className="flex justify-between">
+              <p className="text-lg text-gray-500">20.000 Ft</p>{" "}
             </div>
           </div>
         </div>
@@ -42,10 +40,6 @@ export default function MobilKosarOldal() {
           <div className="p-2">
             <div className="flex justify-between">
               <p className="font-semibold text-xl">Kutyus</p>
-              <p className="text-xl">20.000 Ft</p>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-lg text-gray-500">1 db</p>
               <Image
                 src="/kuka.svg"
                 alt=""
@@ -53,6 +47,9 @@ export default function MobilKosarOldal() {
                 width={22}
                 className="cursor-pointer"
               />
+            </div>
+            <div className="flex justify-between">
+              <p className="text-lg text-gray-500">20.000 Ft</p>{" "}
             </div>
           </div>
         </div>
@@ -67,10 +64,6 @@ export default function MobilKosarOldal() {
           <div className="p-2">
             <div className="flex justify-between">
               <p className="font-semibold text-xl">Kutyus</p>
-              <p className="text-xl">20.000 Ft</p>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-lg text-gray-500">1 db</p>
               <Image
                 src="/kuka.svg"
                 alt=""
@@ -78,6 +71,9 @@ export default function MobilKosarOldal() {
                 width={22}
                 className="cursor-pointer"
               />
+            </div>
+            <div className="flex justify-between">
+              <p className="text-lg text-gray-500">20.000 Ft</p>
             </div>
           </div>
         </div>

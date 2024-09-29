@@ -4,24 +4,28 @@ import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 
-const nem = [
-  { id: 1, name: "Női" },
-  { id: 2, name: "Férfi" },
+const stilus = [
+  { id: 1, name: "Absztrakt" },
+  { id: 2, name: "Impresszionizmus" },
+  { id: 3, name: "Realizmus" },
+  { id: 4, name: "Posztimpresszionizmus" },
+  { id: 5, name: "Fauvizmus" },
+  { id: 6, name: "Futurizmus" },
+  { id: 7, name: "Kubizmus" },
+  { id: 8, name: "Romantika" },
 ];
 
-const kategoria = [
-  { id: 1, name: "Kutya" },
-  { id: 2, name: "Kiskutya" },
-  { id: 3, name: "Vau" },
-  { id: 4, name: "Kisvau" },
+const megjelenes = [
+  { id: 1, name: "2000 után" },
+  { id: 2, name: "1900 és 2000 között" },
+  { id: 3, name: "1900 előtt" },
 ];
 
 const meret = [
-  { id: 1, name: "XS", order: 1 },
-  { id: 2, name: "S", order: 2 },
-  { id: 3, name: "M", order: 3 },
-  { id: 4, name: "L", order: 4 },
-  { id: 5, name: "XL", order: 5 },
+  { id: 1, name: "45 x 60", order: 1 },
+  { id: 2, name: "50 x 60", order: 2 },
+  { id: 3, name: "60 x 90", order: 3 },
+  { id: 4, name: "90 x 120", order: 4 },
 ];
 
 const termekek = [
@@ -30,19 +34,10 @@ const termekek = [
   { id: 3, name: "Pulcsi", price: 15000 },
 ];
 
-const szin = [
-  { id: 1, name: "Fehér" },
-  { id: 2, name: "Fekete" },
-  { id: 3, name: "Szürke" },
-  { id: 4, name: "Zöld" },
-  { id: 5, name: "Kék" },
-];
-
 const rendezesOpciok = [
   { id: 1, name: "Ár növekvő" },
   { id: 2, name: "Ár csökkenő" },
   { id: 3, name: "Legújabb" },
-  { id: 4, name: "Legnépszerűbb" },
 ];
 
 type AccentsMap = {
@@ -77,7 +72,7 @@ function SzuroOpciok() {
   const handleSearch = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
-    const exclude = ["Kategória", "Nem", "Méret", "Szín", "Rendezés"];
+    const exclude = ["Művészeti Stílus", "Megjelenés", "Méret", "Rendezés"];
 
     const { name, value } = e.target;
     const params = new URLSearchParams(searchParams);
@@ -92,28 +87,28 @@ function SzuroOpciok() {
   };
 
   return (
-    <div className="justify-center items-center px-[8vw] flex-wrap gap-2 flex">
+    <div className="justify-center items-center px-[8vw] flex-wrap gap-2 flex flex-col md:flex-row">
       <select
-        name="nem"
+        name="stilus"
         id=""
-        className="py-1 px-2 rounded-full border-2 border-black cursor-pointer"
+        className="py-1 px-2 rounded-full border-2 border-black cursor-pointer w-full md:w-min"
         onChange={handleSearch}
       >
-        <option>Nem</option>
-        {nem.map((item) => (
+        <option>Művészeti Stílus</option>
+        {stilus.map((item) => (
           <option key={item.id} value={removeAccents(item.name)}>
             {item.name}
           </option>
         ))}
       </select>
       <select
-        name="kategoria"
+        name="megjelenes"
         id=""
-        className="py-1 px-2 rounded-full border-2 border-black cursor-pointer"
+        className="py-1 px-2 rounded-full border-2 border-black cursor-pointer  w-full md:w-min"
         onChange={handleSearch}
       >
-        <option>Kategória</option>
-        {kategoria.map((item) => (
+        <option>Megjelenés</option>
+        {megjelenes.map((item) => (
           <option key={item.id} value={removeAccents(item.name)}>
             {item.name}
           </option>
@@ -122,7 +117,7 @@ function SzuroOpciok() {
       <select
         name="meret"
         id=""
-        className="py-1 px-2 rounded-full border-2 border-black cursor-pointer"
+        className="py-1 px-2 rounded-full border-2 border-black cursor-pointer w-full md:w-min"
         onChange={handleSearch}
       >
         <option>Méret</option>
@@ -134,23 +129,10 @@ function SzuroOpciok() {
             </option>
           ))}
       </select>
-      <select
-        name="szin"
-        id=""
-        className="py-1 px-2 rounded-full border-2 border-black cursor-pointer"
-        onChange={handleSearch}
-      >
-        <option>Szín</option>
-        {szin.map((item) => (
-          <option key={item.id} value={removeAccents(item.name)}>
-            {item.name}
-          </option>
-        ))}
-      </select>
       <input
         name="min"
         type="text"
-        className="py-1 px-2 rounded-full border-2 border-black w-40"
+        className="py-1 px-2 rounded-full border-2 border-black w-full md:w-40"
         onChange={handleSearch}
         placeholder={`Min: ${termekek
           .reduce(
@@ -162,7 +144,7 @@ function SzuroOpciok() {
       <input
         name="max"
         type="text"
-        className="py-1 px-2 rounded-full border-2 border-black w-40"
+        className="py-1 px-2 rounded-full border-2 border-black w-full md:w-40"
         onChange={handleSearch}
         placeholder={`Max: ${termekek
           .reduce(
@@ -174,7 +156,7 @@ function SzuroOpciok() {
 
       <select
         name="rendezes"
-        className="py-1 px-2 rounded-full border-2 border-black bg-black text-white cursor-pointer"
+        className="py-1 px-2 rounded-full border-2 border-black bg-black text-white cursor-pointer w-full md:w-min"
         onChange={handleSearch}
       >
         <option>Rendezés</option>
@@ -188,8 +170,8 @@ function SzuroOpciok() {
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Kerés"
-        className="py-1 px-2 rounded-full border-2 border-black md:hidden w-50"
+        placeholder="Keresés"
+        className="py-1 px-2 rounded-full border-2 border-black md:hidden w-full md:w-50"
       />
       <button className="flex md:hidden">
         <Image src="kereso2.svg" alt="" width={30} height={30} />

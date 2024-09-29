@@ -5,131 +5,101 @@ import Link from "next/link";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-function generateItems(count: number) {
-  const items = [];
-
-  const categories = ["kutya", "kiskutya", "vau", "kisvau"];
-  const sizes = ["xs", "s", "m", "l", "xl"];
-  const colors = ["fekete", "feher", "piros", "kek", "zold"];
-  const genders = ["ferfi", "noi"];
-
-  for (let i = 1; i <= count; i++) {
-    items.push({
-      id: i + count * 1000,
-      name: "Kutya",
-      price: 10000,
-      image:
-        "https://images.pexels.com/photos/46505/swiss-shepherd-dog-dog-pet-portrait-46505.jpeg?auto=compress&cs=tinysrgb&w=600",
-      desc: "Pici kiskutya",
-      nem: genders[Math.floor(Math.random() * genders.length)],
-      kategoria: categories[Math.floor(Math.random() * categories.length)],
-      meret: sizes[Math.floor(Math.random() * sizes.length)],
-      szin: colors[Math.floor(Math.random() * colors.length)],
-      letrehozva: new Date(
-        Date.now() - Math.floor(Math.random() * 10000000000)
-      ),
-      eladottMennyiseg: Math.floor(Math.random() * 100),
-    });
-  }
-
-  for (let i = 1; i <= count; i++) {
-    items.push({
-      id: i + count,
-      name: "Kutya",
-      price: 10000,
-      image:
-        "https://images.pexels.com/photos/1490908/pexels-photo-1490908.jpeg?auto=compress&cs=tinysrgb&w=600",
-      desc: "Pici kiskutya",
-      nem: genders[Math.floor(Math.random() * genders.length)],
-      kategoria: categories[Math.floor(Math.random() * categories.length)],
-      meret: sizes[Math.floor(Math.random() * sizes.length)],
-      szin: colors[Math.floor(Math.random() * colors.length)],
-      letrehozva: new Date(
-        Date.now() - Math.floor(Math.random() * 10000000000)
-      ),
-      eladottMennyiseg: Math.floor(Math.random() * 100),
-    });
-  }
-
-  return items;
-}
-
-const termekek = generateItems(40);
 const itemsPerPage = 12;
 
-export default function TermekLista() {
+type Festmeny = {
+  festmenyId: string;
+  nev: string;
+  kep: string;
+  ar: number;
+  leiras: string;
+  stilus: string;
+  ev: number;
+  meret: string;
+  datum: Date;
+  rendelesId: string | null;
+};
+
+export default function TermekLista({
+  festmenyek,
+}: {
+  festmenyek: Festmeny[];
+}) {
   return (
     <Suspense>
-      <TermekListaKomponens />
+      <TermekListaKomponens festmenyek={festmenyek} />
     </Suspense>
   );
 }
 
-export function TermekListaKomponens() {
+export function TermekListaKomponens({
+  festmenyek,
+}: {
+  festmenyek: Festmeny[];
+}) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [filteredItems, setFilteredItems] = useState(termekek);
+  const [filteredItems, setFilteredItems] = useState(festmenyek);
   const searchParams = useSearchParams();
+  const [cart, setCart] = useState<Festmeny[]>([]);
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      setCart(JSON.parse(storedCart));
+    }
+  }, []);
 
   useEffect(() => {
     const min = searchParams.get("min");
     const max = searchParams.get("max");
     const rendezes = searchParams.get("rendezes");
     const search = searchParams.get("search");
-    const nem = searchParams.get("nem");
-    const kategoria = searchParams.get("kategoria");
+    const stilus = searchParams.get("stilus");
+    const ev = searchParams.get("megjelenes");
     const meret = searchParams.get("meret");
-    const szin = searchParams.get("szin");
 
-    let filtered = [...termekek];
+    let filtered = [...festmenyek];
 
     if (min) {
-      filtered = filtered.filter((item) => item.price >= parseInt(min));
+      filtered = filtered.filter((item) => item.ar >= parseInt(min));
     }
     if (max) {
-      filtered = filtered.filter((item) => item.price <= parseInt(max));
+      filtered = filtered.filter((item) => item.ar <= parseInt(max));
     }
     if (search) {
       const lowerSearch = search.toLowerCase();
       filtered = filtered.filter(
         (item) =>
-          item.name.toLowerCase().includes(lowerSearch.toLowerCase()) ||
-          item.desc.toLowerCase().includes(lowerSearch.toLowerCase())
+          item.nev.toLowerCase().includes(lowerSearch.toLowerCase()) ||
+          item.stilus.toLowerCase().includes(lowerSearch.toLowerCase())
       );
     }
-    if (nem) {
-      filtered = filtered.filter((item) => item.nem === nem);
+    if (stilus) {
+      filtered = filtered.filter((item) => item.stilus === stilus);
     }
-    if (kategoria) {
-      filtered = filtered.filter((item) => item.kategoria === kategoria);
+    if (ev) {
+      filtered = filtered.filter((item) => item.ev === parseInt(ev));
     }
     if (meret) {
       filtered = filtered.filter((item) => item.meret === meret);
     }
-    if (szin) {
-      filtered = filtered.filter((item) => item.szin === szin);
-    }
     if (rendezes) {
       switch (rendezes) {
         case "novekvo":
-          filtered.sort((a, b) => a.price - b.price);
+          filtered.sort((a, b) => a.ar - b.ar);
           break;
         case "csokkeno":
-          filtered.sort((a, b) => b.price - a.price);
+          filtered.sort((a, b) => b.ar - a.ar);
           break;
         case "legujabb":
-          filtered.sort(
-            (a, b) => b.letrehozva.getTime() - a.letrehozva.getTime()
-          );
-          break;
-        case "legnepszerubb":
-          filtered.sort((a, b) => b.eladottMennyiseg - a.eladottMennyiseg);
+          filtered.sort((a, b) => b.datum.getTime() - a.datum.getTime());
           break;
       }
     }
 
     setFilteredItems(filtered);
     setCurrentPage(1);
-  }, [searchParams]);
+  }, [searchParams, festmenyek]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -149,17 +119,39 @@ export function TermekListaKomponens() {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
+  const addToCart = (festmeny: Festmeny) => {
+    if (!cart.some((item) => item.festmenyId === festmeny.festmenyId)) {
+      const updatedCart = [...cart, festmeny];
+      setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      console.log(JSON.parse(localStorage.getItem("cart") || "[]"));
+    }
+  };
+
+  const isInCart = (festmenyId: string) => {
+    return cart.some((item) => item.festmenyId === festmenyId);
+  };
+
+  const formatPrice = (price: number) => {
+    return (
+      price.toLocaleString("hu-HU", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }) + " Ft"
+    );
+  };
+
   return (
-    <div className=" md:mx-16 lg:mx-20 xl:mx-28 2xl:mx-40">
+    <div className="mx-8 md:mx-16 lg:mx-20 xl:mx-28 2xl:mx-40">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-8 md:mt-32 lgx:mt-20 gap-6">
         {currentItems.map((item) => (
           <div
-            key={item.id}
+            key={item.festmenyId}
             className={`border-gray-300 border-2 rounded-md overflow-hidden shadow-md w-full `}
           >
-            <Link href={`/termekek/${item.id}`}>
+            <Link href={`/termekek/${item.festmenyId}`}>
               <Image
-                src={item.image}
+                src={item.kep}
                 alt=""
                 height={0}
                 width={0}
@@ -169,13 +161,21 @@ export function TermekListaKomponens() {
             </Link>
             <div className="pt-2 pb-4 px-4 flex flex-col gap-2">
               <div className="flex justify-between items-start font-semibold">
-                <p className="text-lg">{item.name}</p>
-                <p>{item.price}</p>
+                <p className="text-lg">{item.nev}</p>
+                <p>{formatPrice(item.ar)}</p>
               </div>
               <div className="flex gap-6 justify-between items-start">
-                <p className="text-sm text-gray-400">{item.desc}</p>
-                <button className="text-sm text-red-400 border-red-400 border-2 rounded-full px-1.5 py-0.5 hover:bg-red-400 hover:text-white transition ease-in-out duration-300 active:scale-90">
-                  Kosárba
+                <p className="text-sm text-gray-400">{item.stilus}</p>
+                <button
+                  className={`text-sm border-2 rounded-full px-1.5 py-0.5 transition ease-in-out duration-300 active:scale-90 ${
+                    isInCart(item.festmenyId)
+                      ? "text-white bg-gold border-gold cursor-not-allowed"
+                      : "text-gold border-gold hover:bg-gold hover:text-white"
+                  }`}
+                  onClick={() => addToCart(item)}
+                  disabled={isInCart(item.festmenyId)}
+                >
+                  {isInCart(item.festmenyId) ? "Kosárban" : "Kosárba"}
                 </button>
               </div>
             </div>
@@ -184,7 +184,7 @@ export function TermekListaKomponens() {
       </div>
       <div className="mt-9 mb-12 flex justify-between items-center">
         <button
-          className={`text-white bg-red-400 border-2 border-red-400 rounded-md w-24 py-2 hover:bg-white hover:text-red-400 hover:border-red-400 transition ease-in-out duration-300 active:scale-95 ${
+          className={`text-white bg-gold border-2 border-gold rounded-md w-24 py-2 hover:bg-white hover:text-gold hover:border-gold transition ease-in-out duration-300 active:scale-95 ${
             currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
           }`}
           onClick={handlePrevious}
@@ -196,7 +196,7 @@ export function TermekListaKomponens() {
           {currentPage} / {totalPages}
         </span>
         <button
-          className={`text-white bg-red-400 border-2 border-red-400 rounded-md w-24 py-2 hover:bg-white hover:text-red-400 hover:border-red-400 transition ease-in-out duration-300 active:scale-95 ${
+          className={`text-white bg-gold border-2 border-gold rounded-md w-24 py-2 hover:bg-white hover:text-gold hover:border-gold transition ease-in-out duration-300 active:scale-95 ${
             currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
           }`}
           onClick={handleNext}

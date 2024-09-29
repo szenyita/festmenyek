@@ -7,7 +7,7 @@ export default function Lablec() {
         {/*LOGO*/}
         <div className="flex items-center justify-center gap-">
           <Image src="/logo.svg" alt="logo" width={30} height={30} />
-          <p className="font-semibold text-2xl">Poloshop</p>
+          <p className="font-semibold text-2xl">Anonim Művészek</p>
         </div>
         {/*SOCIAL*/}
         <div className="flex items-center justify-center gap-2">
@@ -26,25 +26,25 @@ export default function Lablec() {
       </div>
       {/*NAGYOBB KIJELZŐK*/}
       <div className="hidden md:flex-1 md:flex md:flex-col md:justify-between md:items-center md:py-8 lg:hidden">
-        <h2 className="font-semibold">Népszerű Kategóriák</h2>
-        <p>Mintás Póló</p>
-        <p>Kivágott Póló</p>
-        <p>Piqué Póló</p>
-        <p>Jersey Póló</p>
+        <h2 className="font-semibold">Népszerű Stílusok</h2>
+        <p>Impresszionizmus</p>
+        <p>Realizmus</p>
+        <p>Fauvizmus</p>
+        <p>Kubizmus</p>
       </div>
       <div className="hidden lg:flex-1 lg:flex lg:flex-col lg-justify-between lg:items-center lg:py-8">
-        <h2 className="font-semibold">Népszerű Női Kategóriák</h2>
-        <p>Piqué Póló</p>
-        <p>Jersey Póló</p>
-        <p>Ribbed Póló</p>
-        <p>Henley Póló</p>
+        <h2 className="font-semibold">Népszerű Stílusok</h2>
+        <p>Impresszionizmus</p>
+        <p>Realizmus</p>
+        <p>Fauvizmus</p>
+        <p>Kubizmus</p>
       </div>
       <div className="hidden lg:flex-1 lg:flex lg:flex-col lg-justify-between lg:items-center lg:py-8">
-        <h2 className="font-semibold">Népszerű Férfi Kategóriák</h2>
-        <p>Mintás Póló</p>
-        <p>Kivágott Póló</p>
-        <p>Háromnegyedes Póló</p>
-        <p>Rövid Ujjú Póló</p>
+        <h2 className="font-semibold">Festmény Méretek</h2>
+        <p>40 cm x 60 cm</p>
+        <p>50 cm x 60 cm</p>
+        <p>60 cm x 90 cm</p>
+        <p>90 cm x 120 cm</p>
       </div>
     </div>
   );

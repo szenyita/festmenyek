@@ -1,15 +1,15 @@
 import Diavetito from "@/components/Diavetito";
-import NepszeruTermekek from "@/components/NepszeruTermekek";
-import TermekKategoriak from "@/components/TermekKategoriak";
-import UjTermekek from "@/components/UjTermekek";
+import FrissAlkotasok from "@/components/FrissAlkotasok";
+import MuveszetiStilusok from "@/components/MuveszetiStilusok";
+import MultMuveszet from "@/components/MultMuveszet";
 
 export default function ErkezesiOldal() {
   return (
     <div className="">
       <Diavetito />
-      <NepszeruTermekek />
-      <TermekKategoriak />
-      <UjTermekek />
+      <FrissAlkotasok />
+      <MuveszetiStilusok />
+      <MultMuveszet />
     </div>
   );
 }

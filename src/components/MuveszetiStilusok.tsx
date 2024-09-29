@@ -44,7 +44,7 @@ export default function NepszeruTermekek() {
   return (
     <div>
       <h1 className="flex justify-center items-center text-3xl font-semibold w-full align-center h-[16vh]">
-        Termék Kategóriák
+        Művészeti Stílusok
       </h1>
       <div className="flex lg:justify-between px-[8vw] lg:px-[12vw] xl:px-[6vw] items-center flex-wrap md:flex-nowrap gap-5 justify-center">
         {items.map((item) => (

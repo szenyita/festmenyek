@@ -8,7 +8,7 @@ import Lablec from "../components/Lablec";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Poloshop",
+  title: "Anonim Művészek",
   description: "Legjobb polók",
 };
 

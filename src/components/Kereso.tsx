@@ -42,7 +42,7 @@ export function Kereses() {
 
   return (
     <form
-      className="w-2/3 hidden md:flex rounded-md px-4 py-2 bg-white"
+      className="w-1/2 lg:w-2/3 hidden md:flex rounded-md px-4 py-2 bg-white"
       onSubmit={handleSearch}
     >
       <input

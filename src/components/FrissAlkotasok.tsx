@@ -68,11 +68,11 @@ const items = [
   },
 ];
 
-export default function UjTermekek() {
+export default function NepszeruTermekek() {
   return (
-    <div className="mb-20">
+    <div>
       <h1 className="flex justify-center items-center text-3xl font-semibold w-full align-center h-[16vh]">
-        Új Termékek
+        Friss Alkotások
       </h1>
       <div className="flex xl:justify-around px-[8vw] xl:px-[12vw] items-center flex-wrap gap-5 justify-center">
         {items.map((item) => (
@@ -99,7 +99,7 @@ export default function UjTermekek() {
               </div>
               <div className="flex justify-between items-start">
                 <p className="text-sm text-gray-400">{item.description}</p>
-                <button className="text-sm text-red-400 border-red-400 border-2 rounded-full px-1.5 py-0.5 hover:bg-red-400 hover:text-white transition ease-in-out duration-300 active:scale-90">
+                <button className="text-sm text-gold border-gold border-2 rounded-full px-1.5 py-0.5 hover:bg-gold hover:text-white transition ease-in-out duration-300 active:scale-90">
                   Kosárba
                 </button>
               </div>

@@ -4,10 +4,10 @@ import Link from "next/link";
 const slide = {
   id: 3,
   image:
-    "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1000",
-  description: "Bármire, bármikor készen",
-  title: "Átmeneti dzsekijeink",
-  button: "Fedezd fel most",
+    "https://images.pexels.com/photos/428111/pexels-photo-428111.jpeg?auto=compress&cs=tinysrgb&w=600",
+  description: "Vásároljon festményeket",
+  title: "Anonim magyar művészktől",
+  button: "Alkotások megtekintése",
 };
 export default function Diavetito() {
   return (
