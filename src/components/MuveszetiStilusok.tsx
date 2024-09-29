@@ -5,46 +5,46 @@ const items = [
   {
     id: 1,
     image:
-      "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400",
-    name: "Kategória 1",
+      "https://images.pexels.com/photos/8792984/pexels-photo-8792984.jpeg?auto=compress&cs=tinysrgb&w=600",
+    name: "Realizmus",
   },
   {
     id: 2,
     image:
-      "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400",
-    name: "Kategória 2",
+      "https://images.pexels.com/photos/2983299/pexels-photo-2983299.jpeg?auto=compress&cs=tinysrgb&w=600",
+    name: "Kubizmus",
   },
   {
     id: 3,
     image:
-      "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400",
-    name: "Kategória 3",
+      "https://images.pexels.com/photos/28663140/pexels-photo-28663140/free-photo-of-absztrakt-muveszi-texturazott-felulet-hideg-tonusokkal.jpeg?auto=compress&cs=tinysrgb&w=600",
+    name: "Fauvizmus",
   },
   {
     id: 4,
     image:
-      "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400",
-    name: "Kategória 4",
+      "https://images.pexels.com/photos/6154056/pexels-photo-6154056.jpeg?auto=compress&cs=tinysrgb&w=600",
+    name: "Futurizmus",
   },
   {
     id: 5,
     image:
-      "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400",
-    name: "Kategória 5",
+      "https://images.pexels.com/photos/1258740/pexels-photo-1258740.jpeg?auto=compress&cs=tinysrgb&w=600",
+    name: "Impresszionizmus",
   },
   {
     id: 6,
     image:
-      "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=400",
-    name: "Kategória 6",
+      "https://images.pexels.com/photos/4046718/pexels-photo-4046718.jpeg?auto=compress&cs=tinysrgb&w=600",
+    name: "Romantika",
   },
 ];
 
-export default function NepszeruTermekek() {
+export default function MuveszetiStilusok() {
   return (
     <div>
       <h1 className="flex justify-center items-center text-3xl font-semibold w-full align-center h-[16vh]">
-        Művészeti Stílusok
+        Kedvelt Stílusok
       </h1>
       <div className="flex lg:justify-between px-[8vw] lg:px-[12vw] xl:px-[6vw] items-center flex-wrap md:flex-nowrap gap-5 justify-center">
         {items.map((item) => (
