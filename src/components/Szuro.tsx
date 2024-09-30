@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 
 const stilus = [
   { id: 1, name: "Absztrakt" },
@@ -16,166 +16,145 @@ const stilus = [
 ];
 
 const megjelenes = [
-  { id: 1, name: "2000 után" },
-  { id: 2, name: "1900 és 2000 között" },
-  { id: 3, name: "1900 előtt" },
+  { id: 1, name: "2000 után", value: "2000-utan" },
+  { id: 2, name: "1900 és 2000 között", value: "1900-2000" },
+  { id: 3, name: "1900 előtt", value: "1900-elott" },
 ];
 
 const meret = [
-  { id: 1, name: "45 x 60", order: 1 },
-  { id: 2, name: "50 x 60", order: 2 },
-  { id: 3, name: "60 x 90", order: 3 },
-  { id: 4, name: "90 x 120", order: 4 },
-];
-
-const termekek = [
-  { id: 1, name: "Poló", price: 10000 },
-  { id: 2, name: "Ing", price: 20000 },
-  { id: 3, name: "Pulcsi", price: 15000 },
+  { id: 1, name: "45 x 60", value: "m45x60", order: 1 },
+  { id: 2, name: "50 x 60", value: "m50x60", order: 2 },
+  { id: 3, name: "60 x 90", value: "m60x90", order: 3 },
+  { id: 4, name: "90 x 120", value: "m90x120", order: 4 },
 ];
 
 const rendezesOpciok = [
-  { id: 1, name: "Ár növekvő" },
-  { id: 2, name: "Ár csökkenő" },
-  { id: 3, name: "Legújabb" },
+  { id: 1, name: "Ár növekvő", value: "ar-novekvo" },
+  { id: 2, name: "Ár csökkenő", value: "ar-csokkeno" },
 ];
 
-type AccentsMap = {
-  [key: string]: string;
-};
-
-function removeAccents(str: string) {
-  const accentsMap: AccentsMap = {
-    á: "a",
-    é: "e",
-    í: "i",
-    ó: "o",
-    ö: "o",
-    ő: "o",
-    ú: "u",
-    ü: "u",
-    ű: "u",
-  };
-
-  return str
-    .toLowerCase()
-    .replace(/[áéíóöőúüű]/g, (match) => accentsMap[match] || match);
-}
-
 function SzuroOpciok() {
+  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { replace } = useRouter();
+  const [search, setSearch] = useState(searchParams.get("kereses") || "");
 
-  const [search, setSearch] = useState("");
+  const updateURL = (name: string, value: string) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    if (value) {
+      current.set(name, value);
+    } else {
+      current.delete(name);
+    }
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+    router.push(`${pathname}${query}`);
+  };
 
-  const handleSearch = (
-    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
-  ) => {
-    const exclude = ["Művészeti Stílus", "Megjelenés", "Méret", "Rendezés"];
-
-    const { name, value } = e.target;
+  useEffect(() => {
     const params = new URLSearchParams(searchParams);
 
-    if (exclude.includes(e.target.value)) {
-      params.delete(name);
-    } else {
-      params.set(name, value);
+    if (pathname.startsWith("/termekek")) {
+      if (search) {
+        params.set("kereses", search);
+      } else {
+        params.delete("kereses");
+      }
+      router.replace(`${pathname}?${params.toString()}`);
     }
+  }, [search, searchParams, router, pathname]);
 
-    replace(`${pathname}?${params.toString()}`);
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!pathname.startsWith("/termekek")) {
+      router.push(`/termekek?kereses=${search}`);
+    }
   };
 
   return (
     <div className="justify-center items-center px-[8vw] flex-wrap gap-2 flex flex-col md:flex-row">
       <select
         name="stilus"
-        id=""
         className="py-1 px-2 rounded-full border-2 border-black cursor-pointer w-full md:w-min"
-        onChange={handleSearch}
+        onChange={(e) => updateURL("stilus", e.target.value)}
+        value={searchParams.get("stilus") || ""}
       >
-        <option>Művészeti Stílus</option>
+        <option value="">Művészeti Stílus</option>
         {stilus.map((item) => (
-          <option key={item.id} value={removeAccents(item.name)}>
+          <option key={item.id} value={item.name}>
             {item.name}
           </option>
         ))}
       </select>
       <select
         name="megjelenes"
-        id=""
-        className="py-1 px-2 rounded-full border-2 border-black cursor-pointer  w-full md:w-min"
-        onChange={handleSearch}
+        className="py-1 px-2 rounded-full border-2 border-black cursor-pointer w-full md:w-min"
+        onChange={(e) => updateURL("megjelenes", e.target.value)}
+        value={searchParams.get("megjelenes") || ""}
       >
-        <option>Megjelenés</option>
+        <option value="">Megjelenés</option>
         {megjelenes.map((item) => (
-          <option key={item.id} value={removeAccents(item.name)}>
+          <option key={item.id} value={item.value}>
             {item.name}
           </option>
         ))}
       </select>
       <select
         name="meret"
-        id=""
         className="py-1 px-2 rounded-full border-2 border-black cursor-pointer w-full md:w-min"
-        onChange={handleSearch}
+        onChange={(e) => updateURL("meret", e.target.value)}
+        value={searchParams.get("meret") || ""}
       >
-        <option>Méret</option>
+        <option value="">Méret</option>
         {meret
           .sort((a, b) => a.order - b.order)
           .map((item) => (
-            <option key={item.id} value={removeAccents(item.name)}>
+            <option key={item.id} value={item.value}>
               {item.name}
             </option>
           ))}
       </select>
       <input
         name="min"
-        type="text"
-        className="py-1 px-2 rounded-full border-2 border-black w-full md:w-40"
-        onChange={handleSearch}
-        placeholder={`Min: ${termekek
-          .reduce(
-            (min, termek) => (termek.price < min ? termek.price : min),
-            termekek[0].price
-          )
-          .toString()}`}
+        type="number"
+        className="py-1 px-2 rounded-full border-2 border-black w-full md:w-40 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        placeholder="Min ár"
+        onChange={(e) => updateURL("min", e.target.value)}
+        value={searchParams.get("min") || ""}
       />
       <input
         name="max"
-        type="text"
-        className="py-1 px-2 rounded-full border-2 border-black w-full md:w-40"
-        onChange={handleSearch}
-        placeholder={`Max: ${termekek
-          .reduce(
-            (max, termek) => (termek.price > max ? termek.price : max),
-            termekek[0].price
-          )
-          .toString()}`}
+        type="number"
+        className="py-1 px-2 rounded-full border-2 border-black w-full md:w-40 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        placeholder="Max ár"
+        onChange={(e) => updateURL("max", e.target.value)}
+        value={searchParams.get("max") || ""}
       />
-
       <select
         name="rendezes"
         className="py-1 px-2 rounded-full border-2 border-black bg-black text-white cursor-pointer w-full md:w-min"
-        onChange={handleSearch}
+        onChange={(e) => updateURL("rendezes", e.target.value)}
+        value={searchParams.get("rendezes") || ""}
       >
-        <option>Rendezés</option>
+        <option value="">Rendezés</option>
         {rendezesOpciok.map((item) => (
-          <option key={item.id} value={removeAccents(item.name)}>
+          <option key={item.id} value={item.value}>
             {item.name}
           </option>
         ))}
       </select>
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Keresés"
-        className="py-1 px-2 rounded-full border-2 border-black md:hidden w-full md:w-50"
-      />
-      <button className="flex md:hidden">
-        <Image src="kereso2.svg" alt="" width={30} height={30} />
-      </button>
+
+      <form className="w-full md:w-auto md:hidden" onSubmit={handleSearch}>
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          name="kereses"
+          placeholder="Keresés"
+          className="py-1 px-2 rounded-full border-2 border-black w-full"
+        />
+      </form>
     </div>
   );
 }
@@ -190,23 +169,25 @@ export default function Szuro() {
           <SzuroOpciok />
         </Suspense>
       </div>
-      <div
-        className={`flex md:hidden ${
-          open ? "justify-center pl-[46px]" : "justify-end"
-        } items-start px-4 cursor-pointer`}
-      >
+      <div className={`flex md:hidden ${"space-around"} items-start px-4 `}>
+        <div className="flex-1"></div>
         {open && (
-          <Suspense>
-            <SzuroOpciok />
-          </Suspense>
+          <div className="flex-3">
+            <Suspense>
+              <SzuroOpciok />
+            </Suspense>
+          </div>
         )}
-        <Image
-          src={open ? "/szuronem.svg" : "/szuro.svg"}
-          alt=""
-          width={30}
-          height={30}
-          onClick={() => setOpen((prev) => !prev)}
-        />
+        <div className="flex-1 flex justify-end">
+          <Image
+            src={open ? "/szuronem.svg" : "/szuro.svg"}
+            alt=""
+            width={30}
+            height={30}
+            onClick={() => setOpen((prev) => !prev)}
+            className="justify-end cursor-pointer"
+          />
+        </div>
       </div>
     </div>
   );

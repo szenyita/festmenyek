@@ -23,7 +23,7 @@ export function Kereses() {
     e.preventDefault();
 
     if (!pathname.startsWith("/termekek")) {
-      router.push(`/termekek?nev=${search}`);
+      router.push(`/termekek?kereses=${search}`);
     }
   };
 
@@ -32,9 +32,9 @@ export function Kereses() {
 
     if (pathname.startsWith("/termekek")) {
       if (search) {
-        params.set("nev", search);
+        params.set("kereses", search);
       } else {
-        params.delete("nev");
+        params.delete("kereses");
       }
       router.replace(`${pathname}?${params.toString()}`);
     }
@@ -49,7 +49,7 @@ export function Kereses() {
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        name="nev"
+        name="kereses"
         placeholder="Keresés"
         className="w-full bg-transparent focus:outline-none focus:ring-0"
       />

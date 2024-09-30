@@ -41,20 +41,12 @@ export function TermekListaKomponens({
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredItems, setFilteredItems] = useState(festmenyek);
   const searchParams = useSearchParams();
-  const [cart, setCart] = useState<Festmeny[]>([]);
-
-  useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) {
-      setCart(JSON.parse(storedCart));
-    }
-  }, []);
 
   useEffect(() => {
     const min = searchParams.get("min");
     const max = searchParams.get("max");
     const rendezes = searchParams.get("rendezes");
-    const search = searchParams.get("search");
+    const kereses = searchParams.get("kereses");
     const stilus = searchParams.get("stilus");
     const ev = searchParams.get("megjelenes");
     const meret = searchParams.get("meret");
@@ -67,8 +59,8 @@ export function TermekListaKomponens({
     if (max) {
       filtered = filtered.filter((item) => item.ar <= parseInt(max));
     }
-    if (search) {
-      const lowerSearch = search.toLowerCase();
+    if (kereses) {
+      const lowerSearch = kereses.toLowerCase();
       filtered = filtered.filter(
         (item) =>
           item.nev.toLowerCase().includes(lowerSearch.toLowerCase()) ||
@@ -79,21 +71,30 @@ export function TermekListaKomponens({
       filtered = filtered.filter((item) => item.stilus === stilus);
     }
     if (ev) {
-      filtered = filtered.filter((item) => item.ev === parseInt(ev));
+      switch (ev) {
+        case "1900-elott":
+          filtered = filtered.filter((item) => item.ev < 1900);
+          break;
+        case "1900-2000":
+          filtered = filtered.filter(
+            (item) => item.ev >= 1900 && item.ev <= 2000
+          );
+          break;
+        case "2000-utan":
+          filtered = filtered.filter((item) => item.ev > 2000);
+          break;
+      }
     }
     if (meret) {
       filtered = filtered.filter((item) => item.meret === meret);
     }
     if (rendezes) {
       switch (rendezes) {
-        case "novekvo":
+        case "ar-novekvo":
           filtered.sort((a, b) => a.ar - b.ar);
           break;
-        case "csokkeno":
+        case "ar-csokkeno":
           filtered.sort((a, b) => b.ar - a.ar);
-          break;
-        case "legujabb":
-          filtered.sort((a, b) => b.datum.getTime() - a.datum.getTime());
           break;
       }
     }
@@ -167,7 +168,9 @@ export function TermekListaKomponens({
                       ? "text-white bg-gold border-gold cursor-not-allowed"
                       : "text-gold border-gold hover:bg-gold hover:text-white"
                   }`}
-                  onClick={() => addToCart(item)}
+                  onClick={() =>
+                    addToCart({ ...item, datum: new Date(item.datum) })
+                  }
                   disabled={isInCart(item.festmenyId)}
                 >
                   {isInCart(item.festmenyId) ? "Kosárban" : "Kosárba"}

@@ -18,7 +18,7 @@ type Festmeny = {
   rendelesId: string | null;
 };
 
-export default function FrissAlkotasok({
+export default function BelepoAlkotasok({
   festmenyek,
 }: {
   festmenyek: Festmeny[];
@@ -42,7 +42,7 @@ export default function FrissAlkotasok({
   return (
     <div>
       <h1 className="flex justify-center items-center text-3xl font-semibold w-full align-center h-[16vh]">
-        Friss Alkotások
+        Belépő Alkotások
       </h1>
       <div className="flex xl:justify-around px-[8vw] xl:px-[12vw] items-center flex-wrap gap-5 justify-center">
         {festmenyek?.map((item, index) => (
