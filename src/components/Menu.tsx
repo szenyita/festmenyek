@@ -1,14 +1,20 @@
 "use client";
+import { AuthContext } from "@/context/AuthContext";
 import MobilKosarLink from "./MobilKosarLink";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 export default function Menu() {
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen((prev) => !prev);
   };
+
+  const context = useContext(AuthContext);
+  if (!context) {
+    return null;
+  }
 
   return (
     <div className="md:hidden justify-end">
@@ -29,22 +35,36 @@ export default function Menu() {
           >
             Kezdőlap
           </Link>
-
-          <Link
-            href="/fiok"
-            className="hover:text-gold ease-in-out duration-300 active:scale-95"
-            onClick={handleClick}
-          >
-            Fiók
-          </Link>
+          {context.contextFelhasznalo && (
+            <Link
+              href="/fiok"
+              className="hover:text-gold ease-in-out duration-300 active:scale-95"
+              onClick={handleClick}
+            >
+              Fiók
+            </Link>
+          )}
           <MobilKosarLink />
-          <Link
-            href="/"
-            className="hover:text-gold ease-in-out duration-300 active:scale-95"
-            onClick={handleClick}
-          >
-            Kijelentkezés
-          </Link>
+          {context.contextFelhasznalo && (
+            <p
+              className="hover:text-gold ease-in-out duration-300 active:scale-95"
+              onClick={() => {
+                context.setContextFelhasznalo(null);
+                context.setContextToken(null);
+              }}
+            >
+              Kijelentkezés
+            </p>
+          )}
+          {!context.contextFelhasznalo && (
+            <Link
+              href="/bejelentkezes"
+              className="hover:text-gold ease-in-out duration-300 active:scale-95"
+              onClick={handleClick}
+            >
+              Bejelentkezés
+            </Link>
+          )}
         </div>
       )}
     </div>
