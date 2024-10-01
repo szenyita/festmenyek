@@ -2,17 +2,44 @@
 
 import { loginUser } from "@/lib/auth";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
 
 export default function Bejelentkezes() {
   const [emailError, setEmailError] = useState<string | null>();
   const [bejelentkezesError, setBejelentkezesError] = useState<string | null>();
   const [error, setError] = useState<string | null>();
 
+  const router = useRouter();
+
+  const context = useContext(AuthContext);
+  if (!context) {
+    return;
+  }
+
+  const {
+    setContextFelhasznalo,
+    setContextToken,
+    contextFelhasznalo,
+    contextToken,
+  } = context;
+
   const handleSubmit = async (formData: FormData) => {
-    const { emailError, bejelentkezesError, error } = await loginUser(formData);
+    const { emailError, bejelentkezesError, error, felhasznalo, token } =
+      await loginUser(formData);
     setEmailError(emailError);
     setBejelentkezesError(bejelentkezesError);
+    setError(error);
+    console.log(token);
+    if (token && felhasznalo) {
+      setContextFelhasznalo(felhasznalo);
+      setContextToken(token);
+      console.log(felhasznalo, token);
+      console.log(contextFelhasznalo);
+      console.log(contextToken);
+      router.push("/");
+    }
   };
 
   return (

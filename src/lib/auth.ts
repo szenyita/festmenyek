@@ -4,6 +4,7 @@ import { compare, hash } from "bcrypt";
 import prisma from "../lib/prisma";
 import { isEmail, isStrongPassword } from "validator";
 import { redirect } from "next/navigation";
+import jwt from "jsonwebtoken";
 
 export async function registerUser(formData: FormData) {
   const email = formData.get("email") as string;
@@ -48,6 +49,12 @@ export async function loginUser(formData: FormData) {
   const email = formData.get("email") as string;
   const jelszo = formData.get("jelszo") as string;
 
+  const createToken = (felhasznaloId: string) => {
+    return jwt.sign({ felhasznaloId }, process.env.JWT_SECRET as string, {
+      expiresIn: "7d",
+    });
+  };
+
   if (!isEmail(email)) {
     return { emailError: "Érvénytelen email cím" };
   }
@@ -67,10 +74,12 @@ export async function loginUser(formData: FormData) {
   }
 
   try {
-    // Token
+    const felhasznalo = await prisma.felhasznalo.findUnique({
+      where: { email },
+    });
+    const token = createToken(felhasznalo?.felhasznaloId as string);
+    return { felhasznalo, token };
   } catch (error) {
     return { error: "Bejelentkezési hiba történt" };
   }
-
-  redirect("/");
 }

@@ -5,6 +5,7 @@ import "./globals.css";
 import Fejlec from "../components/Fejlec";
 import Lablec from "../components/Lablec";
 import CartProvider from "@/context/CartContext";
+import AuthProvider from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CartProvider>
-          <Fejlec />
-          {children}
-          <Lablec />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Fejlec />
+            {children}
+            <Lablec />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
