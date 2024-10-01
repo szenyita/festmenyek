@@ -1,5 +1,6 @@
 import Image from "next/image";
 import prisma from "@/lib/prisma";
+import EgyFestmenyKosarba from "@/components/EgyFestmenyKosarba";
 
 export default async function Termek({ params }: { params: { id: string } }) {
   const id = params.id;
@@ -41,24 +42,7 @@ export default async function Termek({ params }: { params: { id: string } }) {
         <p className="font-semibold mt-4 lg:text-lg">
           {formatPrice(festmeny!.ar)}
         </p>
-
-        <div>
-          {!festmeny!.elerheto && (
-            <p className="text-red-400 mt-2 font font-semibold">
-              A festmény nem elérhető
-            </p>
-          )}
-          <button
-            className={`mb-12 mt-3 text-lg text-white bg-gold border-gold border-2 rounded-md px-1.5 py-0.5 ${
-              festmeny!.elerheto
-                ? "hover:bg-white hover:text-gold transition ease-in-out duration-300 active:scale-90"
-                : "opacity-50 cursor-not-allowed"
-            }`}
-            disabled={!festmeny!.elerheto}
-          >
-            Kosárba
-          </button>
-        </div>
+        <EgyFestmenyKosarba festmeny={festmeny} />
       </div>
     </div>
   );

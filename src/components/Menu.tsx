@@ -47,7 +47,7 @@ export default function Menu() {
           <MobilKosarLink />
           {context.contextFelhasznalo && (
             <p
-              className="hover:text-gold ease-in-out duration-300 active:scale-95"
+              className="hover:text-gold ease-in-out duration-300 active:scale-95 cursor-pointer"
               onClick={() => {
                 context.setContextFelhasznalo(null);
                 context.setContextToken(null);
