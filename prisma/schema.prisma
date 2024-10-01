@@ -26,19 +26,19 @@ model Festmeny {
     rendeles   Rendeles? @relation(fields: [rendelesId], references: [rendelesId])
 }
 
-model Vasarlo {
-    vasarloId   String     @id @default(uuid())
-    email       String
-    jelszo      String
-    rendelessek Rendeles[]
+model Felhasznalo {
+    felhasznaloId String     @id @default(uuid())
+    email         String     @unique
+    jelszo        String
+    rendelesek    Rendeles[]
 }
 
 model Rendeles {
-    rendelesId String     @id @default(uuid())
-    datum      DateTime   @default(now())
-    vasarloId  String
-    festmenyek Festmeny[]
-    vasarlo    Vasarlo    @relation(fields: [vasarloId], references: [vasarloId])
+    rendelesId    String      @id @default(uuid())
+    datum         DateTime    @default(now())
+    felhasznaloId String
+    festmenyek    Festmeny[]
+    felhasznalo   Felhasznalo @relation(fields: [felhasznaloId], references: [felhasznaloId])
 }
 
 enum Stilus {
