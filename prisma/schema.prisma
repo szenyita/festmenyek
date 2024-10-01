@@ -1,0 +1,60 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+    directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Festmeny {
+    festmenyId String @id @default(uuid())
+    nev        String
+    kep        String
+    ar         Int
+    leiras     String
+
+    stilus Stilus
+    ev     Int
+    meret  Meret
+    datum  DateTime @default(now())
+
+    elerheto Boolean @default(true)
+
+    rendelesId String?
+    rendeles   Rendeles? @relation(fields: [rendelesId], references: [rendelesId])
+}
+
+model Vasarlo {
+    vasarloId   String     @id @default(uuid())
+    email       String
+    jelszo      String
+    rendelessek Rendeles[]
+}
+
+model Rendeles {
+    rendelesId String     @id @default(uuid())
+    datum      DateTime   @default(now())
+    vasarloId  String
+    festmenyek Festmeny[]
+    vasarlo    Vasarlo    @relation(fields: [vasarloId], references: [vasarloId])
+}
+
+enum Stilus {
+    Absztrakt
+    Impresszionizmus
+    Realizmus
+    Posztimpresszionizmus
+    Fauvizmus
+    Futurizmus
+    Kubizmus
+    Romantika
+}
+
+enum Meret {
+    m45x60
+    m50x60
+    m60x90
+    m90x120
+}
