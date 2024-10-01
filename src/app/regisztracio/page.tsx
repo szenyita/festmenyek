@@ -13,6 +13,7 @@ export default function Regisztracio() {
   const [megerositettJelszoError, setMegerositettJelszoError] = useState<
     string | null
   >();
+  const [error, setError] = useState<string | null>();
 
   const handleSubmit = async (formData: FormData) => {
     const {
@@ -20,6 +21,7 @@ export default function Regisztracio() {
       letezoFelhasznaloError,
       jelszoErossegError,
       megerositettJelszoError,
+      error,
     } = await registerUser(formData);
 
     setEmailError(emailError);
@@ -69,6 +71,7 @@ export default function Regisztracio() {
         {megerositettJelszoError && (
           <p className="text-red-500">{megerositettJelszoError}</p>
         )}
+        {error && <p className="text-red-500">{error}</p>}
         <button
           type="submit"
           className="bg-black border-2 border-black text-white rounded-md py-2 hover:bg-white hover:text-black active:scale-95 transition ease-in-out duration-300"

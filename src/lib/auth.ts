@@ -1,6 +1,6 @@
 "use server";
 
-import { hash } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import prisma from "../lib/prisma";
 import { isEmail, isStrongPassword } from "validator";
 import { redirect } from "next/navigation";
@@ -38,8 +38,39 @@ export async function registerUser(formData: FormData) {
         jelszo: hasheltJelszo,
       },
     });
-  } catch (prismaError) {
-    return { prismaError };
+  } catch (error) {
+    return { error: "Regisztrációs hiba történt" };
   }
   redirect("/bejelentkezes");
+}
+
+export async function loginUser(formData: FormData) {
+  const email = formData.get("email") as string;
+  const jelszo = formData.get("jelszo") as string;
+
+  if (!isEmail(email)) {
+    return { emailError: "Érvénytelen email cím" };
+  }
+
+  const felhasznalo = await prisma.felhasznalo.findUnique({
+    where: { email },
+  });
+
+  if (!felhasznalo) {
+    return { bejelentkezesError: "Helytelen email cím vagy jelszó" };
+  }
+
+  const jelszoEgyezik = await compare(jelszo, felhasznalo.jelszo);
+
+  if (!jelszoEgyezik) {
+    return { bejelentkezesError: "Helytelen email cím vagy jelszó" };
+  }
+
+  try {
+    // Token
+  } catch (error) {
+    return { error: "Bejelentkezési hiba történt" };
+  }
+
+  redirect("/");
 }
