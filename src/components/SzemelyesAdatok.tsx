@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import { CartContext } from "@/context/CartContext";
 import { addOrder } from "@/lib/rendelesKezeles";
+import { usePathname } from "next/navigation";
 
 export default function SzemelyesAdatok() {
   const [successMessage, setSuccessMessage] = useState<string | null>();
@@ -26,16 +27,17 @@ export default function SzemelyesAdatok() {
   const [paymentErrorMessage, setPaymentErrorMessage] = useState<
     string | null
   >();
+  const pathname = usePathname();
 
   const handleSubmit = async (formData: FormData) => {
-    if (window.location.pathname === "/fiok") {
+    if (pathname === "/fiok") {
       const message = await addPersonalData(formData);
       if (message.successMessage) {
         setSuccessMessage(message.successMessage);
       } else {
         setErrorMessage(message.errorMessage);
       }
-    } else if (window.location.pathname === "/penztar") {
+    } else if (pathname === "/penztar") {
       cartContext?.cart.forEach((item) => {
         formData.append(`festmenyIds`, item.festmenyId);
       });
