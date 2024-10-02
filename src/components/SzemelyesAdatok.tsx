@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import { CartContext } from "@/context/CartContext";
 import { addOrder } from "@/lib/rendelesKezeles";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function SzemelyesAdatok() {
   const [successMessage, setSuccessMessage] = useState<string | null>();
@@ -28,6 +28,7 @@ export default function SzemelyesAdatok() {
     string | null
   >();
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleSubmit = async (formData: FormData) => {
     if (pathname === "/fiok") {
@@ -51,7 +52,7 @@ export default function SzemelyesAdatok() {
         );
         setPaymemtSuccessMessage(paymemtSuccessMessage);
         setTimeout(() => {
-          window.location.href = "/";
+          router.push("/");
         }, 5000);
       } else {
         setPaymentErrorMessage(paymentErrorMessage);
@@ -208,7 +209,7 @@ export default function SzemelyesAdatok() {
       {paymentErrorMessage && (
         <p className="font-semibold text-red-400">{paymentErrorMessage}</p>
       )}
-      {window.location.pathname === "/fiok" && (
+      {pathname === "/fiok" && (
         <button
           type="submit"
           className="lg:mb-16 bg-black text-white w-full border-2 border-black mt-4 rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95"
@@ -216,7 +217,7 @@ export default function SzemelyesAdatok() {
           Módosít
         </button>
       )}
-      {window.location.pathname === "/penztar" && (
+      {pathname === "/penztar" && (
         <button
           type="submit"
           className="lg:mb-16 bg-black text-white w-full border-2 border-black mt-4 rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95"
