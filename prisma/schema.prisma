@@ -30,6 +30,16 @@ model Felhasznalo {
     felhasznaloId String     @id @default(uuid())
     email         String     @unique
     jelszo        String
+    vezeteknev    String?
+    keresztnev    String?
+    telefonszam   String?
+    varos         String?
+    iranyitoszam  Int?
+    utca          String?
+    hazszam       Int?
+    emelet        Int?
+    ajto          Int?
+    csengo        Int?
     rendelesek    Rendeles[]
 }
 
@@ -37,6 +47,16 @@ model Rendeles {
     rendelesId    String      @id @default(uuid())
     datum         DateTime    @default(now())
     felhasznaloId String
+    vezeteknev    String
+    keresztnev    String
+    telefonszam   String
+    varos         String
+    iranyitoszam  Int
+    utca          String
+    hazszam       Int
+    emelet        Int?
+    ajto          Int?
+    csengo        Int?
     festmenyek    Festmeny[]
     felhasznalo   Felhasznalo @relation(fields: [felhasznaloId], references: [felhasznaloId])
 }

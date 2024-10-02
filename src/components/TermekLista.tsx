@@ -168,9 +168,7 @@ export function TermekListaKomponens({
                       ? "text-white bg-gold border-gold cursor-not-allowed"
                       : "text-gold border-gold hover:bg-gold hover:text-white"
                   }`}
-                  onClick={() =>
-                    addToCart({ ...item, datum: new Date(item.datum) })
-                  }
+                  onClick={() => addToCart(item)}
                   disabled={isInCart(item.festmenyId)}
                 >
                   {isInCart(item.festmenyId) ? "Kosárban" : "Kosárba"}

@@ -1,8 +1,9 @@
 "use client";
 import Image from "next/image";
 import Fiok from "./Fiok";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext, Suspense } from "react";
 import { CartContext } from "@/context/CartContext";
+import { AuthContext } from "@/context/AuthContext";
 
 export default function FejlecIkonok() {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -19,13 +20,27 @@ export default function FejlecIkonok() {
     };
 
     const context = useContext(CartContext);
+    const authContext = useContext(AuthContext);
+
     if (!context) {
+      return null;
+    }
+    if (!authContext) {
       return null;
     }
 
     const { cart, removeFromCart } = context;
+    const { contextFelhasznalo } = authContext;
 
     const totalPrice = cart.reduce((sum, item) => sum + item.ar, 0);
+
+    const handleCheckout = () => {
+      if (contextFelhasznalo) {
+        window.location.href = "/penztar";
+      } else {
+        window.location.href = "/bejelentkezes?redirect=/penztar";
+      }
+    };
 
     return (
       <div className="w-max flex flex-col absolute top-12 right-0 bg-white rounded-md px-4 pt-3 pb-5 shadow-[0_0_10px_0_rgba(0,0,0,0.5)]">
@@ -74,7 +89,10 @@ export default function FejlecIkonok() {
               {formatPrice(totalPrice)}
             </span>
           </div>
-          <button className="bg-black text-white border-2 border-black rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95">
+          <button
+            onClick={handleCheckout}
+            className="bg-black text-white border-2 border-black rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95"
+          >
             Pénztár
           </button>
         </div>

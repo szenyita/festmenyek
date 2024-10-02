@@ -1,17 +1,31 @@
 "use client";
 
 import { CartContext } from "@/context/CartContext";
+import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
 import { useContext } from "react";
 
 export default function MobilKosarOldal() {
   const context = useContext(CartContext);
+  const authContext = useContext(AuthContext);
   if (!context) {
+    return null;
+  }
+  if (!authContext) {
     return null;
   }
 
   const { cart, removeFromCart } = context;
+  const { contextFelhasznalo } = authContext;
   const totalPrice = cart.reduce((sum, item) => sum + item.ar, 0);
+
+  const handleCheckout = () => {
+    if (contextFelhasznalo) {
+      window.location.href = "/penztar";
+    } else {
+      window.location.href = "/bejelentkezes?redirect=/penztar";
+    }
+  };
 
   const formatPrice = (price: number) => {
     return (
@@ -70,7 +84,10 @@ export default function MobilKosarOldal() {
               {formatPrice(totalPrice)}
             </span>
           </div>
-          <button className="bg-black text-white border-2 border-black rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95">
+          <button
+            onClick={handleCheckout}
+            className="bg-black text-white border-2 border-black rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95"
+          >
             Pénztár
           </button>
         </div>

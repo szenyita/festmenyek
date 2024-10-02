@@ -6,7 +6,11 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
 
-export default function Bejelentkezes() {
+export default function Bejelentkezes({
+  searchParams,
+}: {
+  searchParams: { redirect: string };
+}) {
   const [emailError, setEmailError] = useState<string | null>();
   const [bejelentkezesError, setBejelentkezesError] = useState<string | null>();
   const [error, setError] = useState<string | null>();
@@ -38,7 +42,11 @@ export default function Bejelentkezes() {
       console.log(felhasznalo, token);
       console.log(contextFelhasznalo);
       console.log(contextToken);
-      router.push("/");
+      if (searchParams.redirect) {
+        router.push("/penztar");
+      } else {
+        router.push("/");
+      }
     }
   };
 
@@ -47,9 +55,12 @@ export default function Bejelentkezes() {
       action={handleSubmit}
       className="flex flex-col items-center mt-6 sm:mt-24 mb-60"
     >
-      <div className="flex flex-col sm:border-2 pt-12 pb-16 px-12 rounded-lg">
+      <div className="flex flex-col sm:border-2 pt-12 px-12 pb-16 rounded-lg">
         <h1 className="mb-5 font-semibold text-lg">Bejelentkezés</h1>
-        <label>Email</label>
+        {searchParams.redirect && (
+          <p className="text-red-500">Vásárlás előtt jelentkezz be</p>
+        )}
+        <label className="mt-5">Email</label>
         <input
           id="email"
           name="email"
@@ -64,6 +75,7 @@ export default function Bejelentkezes() {
           className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
           type="password"
         />
+
         {bejelentkezesError && (
           <p className="text-red-500">{bejelentkezesError}</p>
         )}

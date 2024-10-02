@@ -6,6 +6,9 @@ import prisma from "@/lib/prisma";
 
 export default async function ErkezesiOldal() {
   const multFestmenyek = await prisma.festmeny.findMany({
+    where: {
+      elerheto: true,
+    },
     orderBy: {
       ev: "asc",
     },
@@ -13,6 +16,9 @@ export default async function ErkezesiOldal() {
   });
 
   const belepoFestmenyek = await prisma.festmeny.findMany({
+    where: {
+      elerheto: true,
+    },
     orderBy: {
       ar: "asc",
     },
