@@ -1,61 +1,37 @@
-import Link from "next/link";
+"use client";
 
-const rendelesek = [
-  {
-    id: 1,
-    termekek: [
-      { id: 1, name: "Poló", price: 10000 },
-      { id: 2, name: "Ing", price: 20000 },
-      { id: 3, name: "Pulcsi", price: 15000 },
-    ],
-    datum: "2022.01.01",
-  },
-  {
-    id: 2,
-    termekek: [
-      { id: 1, name: "Poló", price: 10000 },
-      { id: 2, name: "Ing", price: 20000 },
-      { id: 3, name: "Pulcsi", price: 15000 },
-    ],
-    datum: "2022.01.01",
-  },
-  {
-    id: 3,
-    termekek: [
-      { id: 1, name: "Poló", price: 10000 },
-      { id: 2, name: "Ing", price: 20000 },
-      { id: 3, name: "Pulcsi", price: 15000 },
-    ],
-    datum: "2022.01.01",
-  },
-  {
-    id: 4,
-    termekek: [
-      { id: 1, name: "Poló", price: 10000 },
-      { id: 2, name: "Ing", price: 20000 },
-      { id: 3, name: "Pulcsi", price: 15000 },
-    ],
-    datum: "2022.01.01",
-  },
-  {
-    id: 5,
-    termekek: [
-      { id: 1, name: "Poló", price: 10000 },
-      { id: 2, name: "Ing", price: 20000 },
-      { id: 3, name: "Pulcsi", price: 15000 },
-    ],
-    datum: "2022.01.01",
-  },
-  {
-    id: 6342142,
-    termekek: [
-      { id: 1, name: "Poló", price: 110000 },
-      { id: 2, name: "Ing", price: 20000 },
-      { id: 3, name: "Pulcsi", price: 15000 },
-    ],
-    datum: "2022.01.01",
-  },
-];
+import Link from "next/link";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext, useEffect, useState } from "react";
+import { getPreviousOrders } from "@/lib/rendelesKezeles";
+
+type Rendeles = {
+  rendelesId: string;
+  datum: Date;
+  felhasznaloId: string;
+  vezeteknev: string;
+  keresztnev: string;
+  telefonszam: string;
+  varos: string;
+  iranyitoszam: number;
+  utca: string;
+  hazszam: number;
+  emelet: number | null;
+  ajto: number | null;
+  csengo: number | null;
+  festmenyek: {
+    festmenyId: string;
+    nev: string;
+    kep: string;
+    ar: number;
+    leiras: string;
+    stilus: string;
+    ev: number;
+    meret: string;
+    datum: Date;
+    rendelesId: string | null;
+  }[];
+};
 
 function formatCurrency(number: number) {
   return (
@@ -66,6 +42,27 @@ function formatCurrency(number: number) {
 }
 
 export default function KorabbiRendelesek() {
+  const [rendelesek, setRendelesek] = useState<Rendeles[]>([]);
+  const context = useContext(AuthContext);
+  useEffect(() => {
+    const fetchRendelesek = async () => {
+      if (context?.contextFelhasznalo) {
+        const rendelesek = await getPreviousOrders(
+          context.contextFelhasznalo.felhasznaloId
+        );
+        if (rendelesek) {
+          setRendelesek(rendelesek);
+        }
+      }
+    };
+
+    fetchRendelesek();
+  }, [context]);
+
+  if (!context?.contextFelhasznalo) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="mx-12 sm:mx-24  md:mx-60 lg:mx-12 mb-12 lg:w-1/3">
       <h1 className="mb-3 mt-10 md:mt-5 font-semibold text-lg">
@@ -78,20 +75,20 @@ export default function KorabbiRendelesek() {
       </div>
       {rendelesek.map((rendeles) => (
         <div
-          key={rendeles.id}
+          key={rendeles.rendelesId}
           className="gap-2 py-1 px-2 odd:bg-gray-200 border-gray-200 border-l-2 border-r-2 last:rounded-b-md last:border-b-2"
         >
           <Link
-            href={`/rendelesek/${rendeles.id}`}
+            href={`/rendelesek/${rendeles.rendelesId}`}
             className="grid grid-cols-3 hover:text-red-400 active:scale-95 transition ease-in-out duration-300"
           >
-            <div>{rendeles.id}</div>
+            <div>{rendeles.rendelesId}</div>
             <div>
               {formatCurrency(
-                rendeles.termekek.reduce((a, b) => a + b.price, 0)
+                rendeles.festmenyek.reduce((a, b) => a + b.ar, 0)
               )}
             </div>
-            <div>{rendeles.datum}</div>
+            <div>{rendeles.datum.toString()}</div>
           </Link>
         </div>
       ))}
