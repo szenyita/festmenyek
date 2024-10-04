@@ -92,14 +92,16 @@ export async function getRevenue() {
     );
     return {
       datum: rendeles.datum,
-      totalAr: totalAr,
+      totalAr,
     };
   });
 
-  const formattedData = result.map((item: any) => ({
-    date: new Date(item.datum).toISOString().split("T")[0],
-    totalAr: item.totalAr,
-  }));
+  const formattedData = result.map(
+    (item: { datum: Date; totalAr: number }) => ({
+      date: new Date(item.datum).toISOString().split("T")[0],
+      totalAr: item.totalAr,
+    })
+  );
 
   return formattedData;
 }
