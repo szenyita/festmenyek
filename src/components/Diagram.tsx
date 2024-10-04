@@ -14,7 +14,7 @@ import { getRevenue } from "@/lib/rendelesKezeles";
 import { useState, useEffect } from "react";
 
 type Ertekesites = {
-  datum: string;
+  date: string;
   totalAr: number;
 };
 
