@@ -56,8 +56,8 @@ export default function MultMuveszet({
               <Image
                 src={item.kep}
                 alt=""
-                height={0}
-                width={0}
+                height={100}
+                width={100}
                 sizes="100vw"
                 className="w-full xl:w-[20vw] h-auto"
               />

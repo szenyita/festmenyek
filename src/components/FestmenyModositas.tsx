@@ -110,7 +110,7 @@ export default function FestmenyModositas() {
               <input
                 id="kep"
                 name="kep"
-                type="text"
+                type="file"
                 className="border rounded-md p-2 mb-2"
               />
             </div>

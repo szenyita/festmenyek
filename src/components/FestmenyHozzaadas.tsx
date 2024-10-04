@@ -15,7 +15,7 @@ const stilusok = [
 ];
 
 const meretek = [
-  { id: 1, name: "m40x60" },
+  { id: 1, name: "m45x60" },
   { id: 2, name: "m50x60" },
   { id: 3, name: "m60x90" },
   { id: 4, name: "m90x120" },
@@ -106,13 +106,7 @@ export default function FestmenyHozzaadas() {
                 required
               />
               <label htmlFor="kep">Kép</label>
-              <input
-                id="kep"
-                name="kep"
-                type="text"
-                className="border rounded-md p-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                required
-              />
+              <input id="kep" name="kep" type="file" required />
             </div>
             <div className="flex justify-end gap-4 mt-6">
               <button

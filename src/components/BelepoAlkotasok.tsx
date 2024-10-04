@@ -48,7 +48,7 @@ export default function BelepoAlkotasok({
         {festmenyek?.map((item, index) => (
           <div
             key={item.festmenyId}
-            className={`border-gray-300 border-2 rounded-md overflow-hidden shadow-md md:w-2/5 w-4/5 xl:w-1/5 lg:w-2/5 ${
+            className={`border-gray-300 border-2 rounded-md overflow-hidden shadow-md md:w-2/5 w-4/5 xl:w-1/5 lg:w-2/5 mb-16 ${
               index > 3 ? "hidden xl:block xl:mt-10" : ""
             }`}
           >
@@ -56,8 +56,8 @@ export default function BelepoAlkotasok({
               <Image
                 src={item.kep}
                 alt=""
-                height={0}
-                width={0}
+                height={100}
+                width={100}
                 sizes="100vw"
                 className="w-full xl:w-[20vw] h-auto"
               />
