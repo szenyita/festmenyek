@@ -72,3 +72,34 @@ export async function getPreviousOrders(felhasznaloId: string) {
 
   return rendelesek;
 }
+
+export async function getRevenue() {
+  const rendelesekWithTotalAr = await prisma.rendeles.findMany({
+    select: {
+      datum: true,
+      festmenyek: {
+        select: {
+          ar: true,
+        },
+      },
+    },
+  });
+
+  const result = rendelesekWithTotalAr.map((rendeles) => {
+    const totalAr = rendeles.festmenyek.reduce(
+      (sum, festmeny) => sum + festmeny.ar,
+      0
+    );
+    return {
+      datum: rendeles.datum,
+      totalAr: totalAr,
+    };
+  });
+
+  const formattedData = result.map((item: any) => ({
+    date: new Date(item.datum).toISOString().split("T")[0],
+    totalAr: item.totalAr,
+  }));
+
+  return formattedData;
+}

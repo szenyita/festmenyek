@@ -10,14 +10,26 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { getRevenue } from "@/lib/rendelesKezeles";
+import { useState, useEffect } from "react";
+
+type Ertekesites = {
+  datum: string;
+  totalAr: number;
+};
+
 export default function Diagram() {
-  const data = [
-    { date: "2023-09-01", sales: 100000 },
-    { date: "2023-09-02", sales: 15000 },
-    { date: "2023-09-03", sales: 800000 },
-    { date: "2023-09-04", sales: 20000 },
-    { date: "2023-09-05", sales: 1300 },
-  ];
+  const [data, setData] = useState<Ertekesites[]>([]);
+
+  const gettingData = async () => {
+    const data = await getRevenue();
+    console.log(data);
+    setData(data);
+  };
+
+  useEffect(() => {
+    gettingData();
+  }, []);
 
   const formatCurrency = (value: number) => `${value.toLocaleString()} Ft`;
 
@@ -34,7 +46,7 @@ export default function Diagram() {
             <XAxis dataKey="date" />
             <YAxis tickFormatter={formatCurrency} />
             <Tooltip formatter={formatCurrency} />
-            <Line dataKey="sales" stroke="#8884d8" strokeWidth={2} />
+            <Line dataKey="totalAr" stroke="#8884d8" strokeWidth={2} />
           </LineChart>
         </ResponsiveContainer>
       </div>

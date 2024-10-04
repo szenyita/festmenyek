@@ -1,105 +1,58 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getDeliveries, setToDelivered } from "@/lib/szallitasKezeles";
+import { revalidatePath } from "next/cache";
 
-const rendelesek = [
-  {
-    id: 1,
-    felhasznalo: {
-      nev: "Kovács János",
-      telefon: "+36 30 123 4567",
-      varos: "Budapest",
-      iranyitoszam: "1011",
-      utca: "Fő utca",
-      hazszam: "1",
-      csengo: 1234,
-      emelet: 3,
-      ajto: 12,
-    },
-    datum: "2022.01.01",
-    termekek: [
-      { id: 1, name: "Poló", price: 10000 },
-      { id: 2, name: "Ing", price: 20000 },
-      { id: 3, name: "Pulcsi", price: 15000 },
-    ],
-  },
-  {
-    id: 2,
-    felhasznalo: {
-      nev: "Nagy Anna",
-      telefon: "+36 20 987 6543",
-      varos: "Debrecen",
-      iranyitoszam: "4026",
-      utca: "Kossuth utca",
-      hazszam: "10",
-    },
-    datum: "2022.01.02",
-    termekek: [
-      { id: 1, name: "Kabát", price: 30000 },
-      { id: 2, name: "Nadrág", price: 25000 },
-    ],
-  },
-  {
-    id: 3,
-    felhasznalo: {
-      nev: "Szabó Péter",
-      telefon: "+36 70 456 7890",
-      varos: "Miskolc",
-      iranyitoszam: "3510",
-      utca: "Arany János utca",
-      hazszam: "5",
-    },
-    datum: "2022.01.03",
-    termekek: [
-      { id: 1, name: "Zokni", price: 5000 },
-      { id: 2, name: "Sapka", price: 7000 },
-    ],
-  },
-  {
-    id: 4,
-    felhasznalo: {
-      nev: "Kiss Júlia",
-      telefon: "+36 30 345 6789",
-      varos: "Pécs",
-      iranyitoszam: "7621",
-      utca: "Váci Mihály utca",
-      hazszam: "8",
-    },
-    datum: "2022.01.04",
-    termekek: [
-      { id: 1, name: "Könyv", price: 12000 },
-      { id: 2, name: "Táska", price: 18000 },
-    ],
-  },
-  {
-    id: 5,
-    felhasznalo: {
-      nev: "Tóth László",
-      telefon: "+36 70 321 4321",
-      varos: "Szeged",
-      iranyitoszam: "6720",
-      utca: "Kálvária sugárút",
-      hazszam: "3",
-    },
-    datum: "2022.01.05",
-    termekek: [
-      { id: 1, name: "Pulóver", price: 15000 },
-      { id: 2, name: "Sál", price: 8000 },
-    ],
-  },
-];
+type Rendeles = {
+  rendelesId: string;
+  datum: Date;
+  felhasznaloId: string;
+  vezeteknev: string;
+  keresztnev: string;
+  telefonszam: string;
+  varos: string;
+  iranyitoszam: number;
+  utca: string;
+  hazszam: number;
+  emelet: number | null;
+  ajto: number | null;
+  csengo: number | null;
+  kiszallitva: boolean | null;
+};
 
 export default function SzallitasKezeles() {
-  const [selectedRendeles, setSelectedRendeles] = useState<number | null>(null);
+  const [rendelesek, setRendelesek] = useState<Rendeles[]>([]);
+
+  const getRendelesek = async () => {
+    const aktivRendelesek = await getDeliveries();
+    setRendelesek(aktivRendelesek);
+  };
+
+  useEffect(() => {
+    getRendelesek();
+  }, []);
+
+  const [selectedRendeles, setSelectedRendeles] = useState<string | null>(null);
 
   const handleConfirmDelivery = () => {
     if (selectedRendeles !== null) {
+      setToDelivered(selectedRendeles);
       setSelectedRendeles(null);
+      getRendelesek();
     }
   };
 
   const selectedRendelesData = rendelesek.find(
-    (r) => r.id === selectedRendeles
+    (r) => r.rendelesId === selectedRendeles
   );
+
+  if (rendelesek.length === 0) {
+    return (
+      <div className="h-[calc(100vh-192px-64px)] flex justify-center pt-20 font-semibold">
+        Nincsenek aktív rendelések
+      </div>
+    );
+  }
 
   return (
     <div className="mx-12 sm:mx-24 md:mx-60 lg:mx-12 mb-12 lg:w-1/3">
@@ -113,50 +66,73 @@ export default function SzallitasKezeles() {
       </div>
       {rendelesek.map((rendeles) => (
         <div
-          key={rendeles.id}
+          key={rendeles.rendelesId}
           className="gap-2 py-1 px-2 odd:bg-gray-200 border-gray-200 border-l-2 border-r-2 last:rounded-b-md last:border-b-2"
         >
           <div
-            onClick={() => setSelectedRendeles(rendeles.id)}
+            onClick={() => setSelectedRendeles(rendeles.rendelesId)}
             className="grid grid-cols-3 cursor-pointer hover:text-red-400 active:scale-95 transition ease-in-out duration-300"
           >
-            <div>{rendeles.id}</div>
+            <div>{rendeles.rendelesId}</div>
             <div>
-              {`${rendeles.felhasznalo.varos} ${rendeles.felhasznalo.iranyitoszam} ${rendeles.felhasznalo.utca} ${rendeles.felhasznalo.hazszam}`}
+              {`${rendeles.varos} ${rendeles.iranyitoszam} ${rendeles.utca} ${rendeles.hazszam}`}
             </div>
-            <div>{rendeles.datum}</div>
+            <div>{rendeles.datum.toString()}</div>
           </div>
         </div>
       ))}
 
       {selectedRendelesData && (
         <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg shadow-lg p-8 w-11/12 sm:w-1/2 md:w-1/3 lg:w-1/4">
+          <div className="bg-white rounded-lg shadow-lg p-8 w-11/12 sm:w-1/2 md:w-1/3 lg:w-1/4 max-h-[90vh] overflow-y-auto">
             <h2 className="text-xl font-semibold mb-4">Rendelés Részletei</h2>
             <div className="mb-4">
               <p className="font-medium">Felhasználó neve:</p>
-              <p>{selectedRendelesData.felhasznalo.nev}</p>
+              <p className="text-gray-600">
+                {selectedRendelesData.vezeteknev}
+                {selectedRendelesData.keresztnev}
+              </p>
             </div>
             <div className="mb-4">
               <p className="font-medium">Telefonszám:</p>
-              <p>{selectedRendelesData.felhasznalo.telefon}</p>
+              <p className="text-gray-600">
+                {selectedRendelesData.telefonszam}
+              </p>
             </div>
-            {selectedRendelesData.felhasznalo.csengo && (
-              <div className="mb-4">
-                <p className="font-medium">Csengőszám:</p>
-                <p>{selectedRendelesData.felhasznalo.csengo}</p>
-              </div>
-            )}
-            {selectedRendelesData.felhasznalo.emelet && (
+            <div className="mb-4">
+              <p className="font-medium">Város:</p>
+              <p className="text-gray-600">{selectedRendelesData.varos}</p>
+            </div>
+            <div className="mb-4">
+              <p className="font-medium">Irányítószám:</p>
+              <p className="text-gray-600">
+                {selectedRendelesData.iranyitoszam}
+              </p>
+            </div>
+            <div className="mb-4">
+              <p className="font-medium">Utca:</p>
+              <p className="text-gray-600">{selectedRendelesData.utca}</p>
+            </div>
+            <div className="mb-4">
+              <p className="font-medium">Házszám:</p>
+              <p className="text-gray-600">{selectedRendelesData.hazszam}</p>
+            </div>
+            {selectedRendelesData.emelet && (
               <div className="mb-4">
                 <p className="font-medium">Emelet:</p>
-                <p>{selectedRendelesData.felhasznalo.emelet}</p>
+                <p className="text-gray-600">{selectedRendelesData.emelet}</p>
               </div>
             )}
-            {selectedRendelesData.felhasznalo.ajto && (
+            {selectedRendelesData.ajto && (
               <div className="mb-4">
                 <p className="font-medium">Ajtó:</p>
-                <p>{selectedRendelesData.felhasznalo.ajto}</p>
+                <p className="text-gray-600">{selectedRendelesData.ajto}</p>
+              </div>
+            )}
+            {selectedRendelesData.csengo && (
+              <div className="mb-4">
+                <p className="font-medium">Csengőszám:</p>
+                <p className="text-gray-600">{selectedRendelesData.csengo}</p>
               </div>
             )}
             <div className="flex justify-end gap-4">

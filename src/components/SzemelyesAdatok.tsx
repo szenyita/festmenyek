@@ -53,7 +53,7 @@ export default function SzemelyesAdatok() {
         setPaymemtSuccessMessage(paymemtSuccessMessage);
         setTimeout(() => {
           router.push("/");
-        }, 5000);
+        }, 3000);
       } else {
         setPaymentErrorMessage(paymentErrorMessage);
       }
@@ -217,7 +217,7 @@ export default function SzemelyesAdatok() {
           Módosít
         </button>
       )}
-      {pathname === "/penztar" && (
+      {pathname === "/penztar" && !paymemtSuccessMessage && (
         <button
           type="submit"
           className="lg:mb-16 bg-black text-white w-full border-2 border-black mt-4 rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95"
@@ -225,6 +225,14 @@ export default function SzemelyesAdatok() {
           {`Fizet: ${formatPrice(
             cartContext.cart.reduce((sum, item) => sum + item.ar, 0)
           )}`}
+        </button>
+      )}
+      {pathname === "/penztar" && paymemtSuccessMessage && (
+        <button
+          type="submit"
+          className="lg:mb-16 bg-black text-white w-full border-2 border-black mt-4 rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95"
+        >
+          Fizetés Animáció
         </button>
       )}
     </form>

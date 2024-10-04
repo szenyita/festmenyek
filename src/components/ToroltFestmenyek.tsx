@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default async function ToroltFestmenyek() {
   const festmenyek = await prisma.festmeny.findMany({
-    where: { elerheto: false },
+    where: { elerheto: false, rendelesId: null },
   });
 
   const formatPrice = (price: number) => {
@@ -19,6 +19,9 @@ export default async function ToroltFestmenyek() {
     <div className="flex flex-col items-center justify-center mt-8 mb-20 border-2 mx-[9vw] py-6 rounded-lg">
       <h2 className="text-2xl font-semibold mb-12">Törölt Festményekt</h2>
       <div className="flex flex-col gap-12">
+        {festmenyek.length === 0 && (
+          <p className="font-medium">Nincsenek törölt festmények</p>
+        )}
         {festmenyek.map((festmeny) => (
           <div key={festmeny.festmenyId} className="flex mx-28">
             <div className="flex-1 flex items-center justify-center">

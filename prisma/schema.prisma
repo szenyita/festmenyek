@@ -57,6 +57,7 @@ model Rendeles {
     emelet        Int?
     ajto          Int?
     csengo        Int?
+    kiszallitva   Boolean     @default(false)
     festmenyek    Festmeny[]
     felhasznalo   Felhasznalo @relation(fields: [felhasznaloId], references: [felhasznaloId])
 }
