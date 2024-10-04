@@ -33,6 +33,17 @@ export default function Diagram() {
 
   const formatCurrency = (value: number) => `${value.toLocaleString()} Ft`;
 
+  if (data.length === 0) {
+    return (
+      <div className="flex flex-col items-center mx-[9vw] border-2 rounded-lg mt-8 py-6">
+        <h2 className=" text-2xl font-semibold">Értékesítési Adatok</h2>
+        <div className="flex justify-center pt-10 font-semibold">
+          Nincs értékesítési adat
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center mx-[9vw] border-2 rounded-lg mt-8 py-6">
       <h2 className="mb-8 text-2xl font-semibold">Értékesítési Adatok</h2>

@@ -27,8 +27,8 @@ model Festmeny {
 }
 
 model Felhasznalo {
-    felhasznaloId String     @id @default(uuid())
-    email         String     @unique
+    felhasznaloId String      @id @default(uuid())
+    email         String      @unique
     jelszo        String
     vezeteknev    String?
     keresztnev    String?
@@ -40,6 +40,7 @@ model Felhasznalo {
     emelet        Int?
     ajto          Int?
     csengo        Int?
+    jogosultsag   Jogosultsag @default(Felhasznalo)
     rendelesek    Rendeles[]
 }
 
@@ -78,4 +79,10 @@ enum Meret {
     m50x60
     m60x90
     m90x120
+}
+
+enum Jogosultsag {
+    TermekKezelo
+    SzallitasKezelo
+    Felhasznalo
 }

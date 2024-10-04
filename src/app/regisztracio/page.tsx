@@ -28,6 +28,7 @@ export default function Regisztracio() {
     setLetezoFelhasznaloError(letezoFelhasznaloError);
     setJelszoErossegError(jelszoErossegError);
     setMegerositettJelszoError(megerositettJelszoError);
+    setError(error);
   };
 
   return (

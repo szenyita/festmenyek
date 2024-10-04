@@ -80,6 +80,7 @@ export async function loginUser(formData: FormData) {
     const token = createToken(felhasznalo?.felhasznaloId as string);
     return { felhasznalo, token };
   } catch (error) {
+    console.log(error);
     return { error: "Bejelentkezési hiba történt" };
   }
 }

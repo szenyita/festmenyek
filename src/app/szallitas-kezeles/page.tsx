@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getDeliveries, setToDelivered } from "@/lib/szallitasKezeles";
-import { revalidatePath } from "next/cache";
 
 type Rendeles = {
   rendelesId: string;
