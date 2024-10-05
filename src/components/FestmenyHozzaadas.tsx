@@ -23,10 +23,17 @@ const meretek = [
 
 export default function FestmenyHozzaadas() {
   const [open, setOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleSubmit = async (formData: FormData) => {
     await addFestmeny(formData);
     setOpen(false);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+    }
   };
 
   return (
@@ -105,8 +112,20 @@ export default function FestmenyHozzaadas() {
                 className="border rounded-md p-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 required
               />
-              <label htmlFor="kep">Kép</label>
-              <input id="kep" name="kep" type="file" required />
+              <label>Kép</label>
+              <input
+                id="kep"
+                name="kep"
+                type="file"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+              <div
+                className="bg-gray-200 border-2 cursor-pointer h-[41.6px] border-gray-200 rounded-md p-2 text-black transition ease-in-out duration-300 active:border-black"
+                onClick={() => document.getElementById("kep")!.click()}
+              >
+                {selectedFile && selectedFile.name}
+              </div>
             </div>
             <div className="flex justify-end gap-4 mt-6">
               <button
