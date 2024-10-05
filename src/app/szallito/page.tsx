@@ -1,6 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getDeliveries, setToDelivered } from "@/lib/szallitasKezeles";
+import { AuthContext } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 type Rendeles = {
   rendelesId: string;
@@ -21,6 +23,7 @@ type Rendeles = {
 
 export default function SzallitasKezeles() {
   const [rendelesek, setRendelesek] = useState<Rendeles[]>([]);
+  const router = useRouter();
 
   const getRendelesek = async () => {
     const aktivRendelesek = await getDeliveries();
@@ -44,6 +47,16 @@ export default function SzallitasKezeles() {
   const selectedRendelesData = rendelesek.find(
     (r) => r.rendelesId === selectedRendeles
   );
+
+  const context = useContext(AuthContext);
+  if (!context) {
+    return null;
+  }
+
+  if (context.contextFelhasznalo?.jogosultsag !== "Szallito") {
+    router.push("/");
+    return <div></div>;
+  }
 
   if (rendelesek.length === 0) {
     return (
@@ -70,7 +83,7 @@ export default function SzallitasKezeles() {
         >
           <div
             onClick={() => setSelectedRendeles(rendeles.rendelesId)}
-            className="grid grid-cols-3 cursor-pointer hover:text-red-400 active:scale-95 transition ease-in-out duration-300"
+            className="grid grid-cols-3 cursor-pointer hover:text-gold active:scale-95 transition ease-in-out duration-300"
           >
             <div>{rendeles.rendelesId}</div>
             <div>

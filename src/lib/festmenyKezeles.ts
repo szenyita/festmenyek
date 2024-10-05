@@ -150,3 +150,10 @@ export async function updateFestmeny(formData: FormData) {
     console.error(error);
   }
 }
+
+export async function getDeletedFestmeny() {
+  const festmenyek = await prisma.festmeny.findMany({
+    where: { elerheto: false, rendelesId: null },
+  });
+  return festmenyek;
+}

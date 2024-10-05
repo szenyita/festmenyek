@@ -42,7 +42,11 @@ export default function Bejelentkezes({
       console.log(felhasznalo, token);
       console.log(contextFelhasznalo);
       console.log(contextToken);
-      if (searchParams.redirect) {
+      if (felhasznalo.jogosultsag === "Admin") {
+        router.push("/admin");
+      } else if (felhasznalo.jogosultsag === "Szallito") {
+        router.push("/szallito");
+      } else if (searchParams.redirect) {
         router.push("/penztar");
       } else {
         router.push("/");

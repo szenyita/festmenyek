@@ -82,7 +82,7 @@ enum Meret {
 }
 
 enum Jogosultsag {
-    TermekKezelo
-    SzallitasKezelo
+    Admin
+    Szallito
     Felhasznalo
 }

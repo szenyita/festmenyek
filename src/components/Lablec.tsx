@@ -1,6 +1,20 @@
+"use client";
+
+import { useContext } from "react";
+import { AuthContext } from "@/context/AuthContext";
+
 import Image from "next/image";
 
 export default function Lablec() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    return null;
+  }
+
+  if (context.contextFelhasznalo?.jogosultsag === "Szallito") {
+    return <div></div>;
+  }
+
   return (
     <div className="flex px-[10vw] bg-gray-200">
       <div className="flex-1 flex flex-col gap-2 py-8">

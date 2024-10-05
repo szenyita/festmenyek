@@ -80,7 +80,7 @@ export default function KorabbiRendelesek() {
         >
           <Link
             href={`/rendelesek/${rendeles.rendelesId}`}
-            className="grid grid-cols-3 hover:text-red-400 active:scale-95 transition ease-in-out duration-300"
+            className="grid grid-cols-3 hover:text-gold active:scale-95 transition ease-in-out duration-300"
           >
             <div>{rendeles.rendelesId}</div>
             <div>

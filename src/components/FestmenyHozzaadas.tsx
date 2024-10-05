@@ -72,7 +72,7 @@ export default function FestmenyHozzaadas() {
               <select
                 id="stilus"
                 name="stilus"
-                className="cursor-pointer border rounded-md p-2 mb-2"
+                className="cursor-pointer border rounded-md p-2 mb-2 h-[41.6px]"
                 required
               >
                 <option value=""></option>
@@ -86,7 +86,7 @@ export default function FestmenyHozzaadas() {
               <select
                 id="meret"
                 name="meret"
-                className="cursor-pointer border rounded-md p-2 mb-2"
+                className="cursor-pointer border rounded-md p-2 mb-2 h-[41.6px]"
                 required
               >
                 <option value=""></option>

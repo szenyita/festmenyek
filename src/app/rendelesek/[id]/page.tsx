@@ -96,7 +96,7 @@ export default function Rendelesek() {
         >
           <Link
             href={`/termekek/${termek.festmenyId}`}
-            className="grid grid-cols-2 hover:text-red-400 active:scale-95 transiton ease-in-out duration-300"
+            className="grid grid-cols-2 hover:text-gold active:scale-95 transiton ease-in-out duration-300"
           >
             <div>{termek.nev}</div>
             <div>{formatCurrency(termek.ar)}</div>
