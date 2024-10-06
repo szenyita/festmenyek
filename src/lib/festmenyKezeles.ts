@@ -61,7 +61,7 @@ export async function softDeleteFestmeny(formData: FormData) {
         elerheto: false,
       },
     });
-    revalidatePath("/termek-kezeles");
+    revalidatePath("/admin");
     console.log("Soft deleted");
   } catch (error) {
     console.error(error);
@@ -80,7 +80,7 @@ export async function bringbackFestmeny(formData: FormData) {
         elerheto: true,
       },
     });
-    revalidatePath("/termek-kezeles");
+    revalidatePath("/admin");
     revalidatePath("/termekek");
     revalidatePath("/");
     console.log("Brought back");

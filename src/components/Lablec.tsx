@@ -16,7 +16,7 @@ export default function Lablec() {
   }
 
   return (
-    <div className="flex px-[10vw] bg-gray-200">
+    <div className="flex px-[10vw] bg-gray-200 mt-12">
       <div className="flex-1 flex flex-col gap-2 py-8">
         {/*LOGO*/}
         <div className="flex items-center justify-center gap-">

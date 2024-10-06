@@ -50,7 +50,7 @@ export default function AuthProvider({
         JSON.stringify(contextFelhasznalo)
       );
     }
-  }, [contextFelhasznalo]);
+  }, [contextFelhasznalo, setContextFelhasznalo]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {

@@ -1,16 +1,11 @@
 import Szuro from "@/components/Szuro";
 import TermekLista from "@/components/TermekLista";
-import prisma from "@/lib/prisma";
 
-export default async function Termekek() {
-  const festmenyek = await prisma.festmeny.findMany({
-    where: { elerheto: true },
-  });
-
+export default function Termekek() {
   return (
     <div>
       <Szuro />
-      <TermekLista festmenyek={festmenyek} />
+      <TermekLista />
     </div>
   );
 }

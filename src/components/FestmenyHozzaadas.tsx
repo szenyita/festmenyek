@@ -28,6 +28,7 @@ export default function FestmenyHozzaadas() {
   const handleSubmit = async (formData: FormData) => {
     await addFestmeny(formData);
     setOpen(false);
+    setSelectedFile(null);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,7 +132,10 @@ export default function FestmenyHozzaadas() {
               <button
                 type="button"
                 className="bg-red-400 text-white border-2 border-red-400 rounded-md px-4 py-2 hover:bg-white hover:text-red-400 transition ease-in-out duration-300 active:scale-95"
-                onClick={() => setOpen((prev) => !prev)}
+                onClick={() => {
+                  setOpen((prev) => !prev);
+                  setSelectedFile(null);
+                }}
               >
                 Vissza
               </button>

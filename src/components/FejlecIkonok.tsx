@@ -4,6 +4,7 @@ import Fiok from "./Fiok";
 import { useState, useContext, Suspense } from "react";
 import { CartContext } from "@/context/CartContext";
 import { AuthContext } from "@/context/AuthContext";
+import Link from "next/link";
 
 export default function FejlecIkonok() {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -101,10 +102,10 @@ export default function FejlecIkonok() {
   }
 
   const context = useContext(CartContext);
+
   if (!context) {
     return null;
   }
-
   const { cart: cartItems } = context;
 
   return (

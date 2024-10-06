@@ -5,8 +5,7 @@ import Link from "next/link";
 import { useState, useEffect, Suspense, useContext } from "react";
 import { useSearchParams } from "next/navigation";
 import { CartContext } from "@/context/CartContext";
-
-const itemsPerPage = 12;
+import { getFestmenyek } from "@/lib/festmenyekOldal";
 
 type Festmeny = {
   festmenyId: string;
@@ -21,23 +20,26 @@ type Festmeny = {
   rendelesId: string | null;
 };
 
-export default function TermekLista({
-  festmenyek,
-}: {
-  festmenyek: Festmeny[];
-}) {
+export default function TermekLista() {
   return (
     <Suspense>
-      <TermekListaKomponens festmenyek={festmenyek} />
+      <TermekListaKomponens />
     </Suspense>
   );
 }
 
-export function TermekListaKomponens({
-  festmenyek,
-}: {
-  festmenyek: Festmeny[];
-}) {
+export function TermekListaKomponens() {
+  const [festmenyek, setFestmenyek] = useState<Festmeny[]>([]);
+
+  const gettingFestmenyek = async () => {
+    const festmenyek = await getFestmenyek();
+    setFestmenyek(festmenyek);
+  };
+
+  useEffect(() => {
+    gettingFestmenyek();
+  }, []);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredItems, setFilteredItems] = useState(festmenyek);
   const searchParams = useSearchParams();
@@ -103,20 +105,6 @@ export function TermekListaKomponens({
     setCurrentPage(1);
   }, [searchParams, festmenyek]);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-
-  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-
-  const handlePrevious = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1));
-  };
-
-  const handleNext = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  };
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
@@ -139,20 +127,21 @@ export function TermekListaKomponens({
 
   return (
     <div className="mx-8 md:mx-16 lg:mx-20 xl:mx-28 2xl:mx-40">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-8 md:mt-32 lgx:mt-20 gap-6">
-        {currentItems.map((item) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-8 md:mt-32 lgx:mt-20 gap-6 items-center">
+        {filteredItems.map((item) => (
           <div
             key={item.festmenyId}
-            className={`border-gray-300 border-2 rounded-md overflow-hidden shadow-md w-full `}
+            className={`border-gray-300 border-2 rounded-md overflow-hidden shadow-md h-fit`}
           >
-            <Link href={`/termekek/${item.festmenyId}`}>
+            <Link href={`/termekek/${item.festmenyId}`} className="">
               <Image
                 src={item.kep}
                 alt=""
-                height={0}
-                width={0}
+                layout="responsive"
+                width={100}
+                height={100}
                 sizes="100vw"
-                className="w-full h-auto"
+                className="w-full"
               />
             </Link>
             <div className="pt-2 pb-4 px-4 flex flex-col gap-2">
@@ -177,29 +166,6 @@ export function TermekListaKomponens({
             </div>
           </div>
         ))}
-      </div>
-      <div className="mt-9 mb-12 flex justify-between items-center">
-        <button
-          className={`text-white bg-gold border-2 border-gold rounded-md w-24 py-2 hover:bg-white hover:text-gold hover:border-gold transition ease-in-out duration-300 active:scale-95 ${
-            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          onClick={handlePrevious}
-          disabled={currentPage === 1}
-        >
-          Előző
-        </button>
-        <span className="text-gray-600">
-          {currentPage} / {totalPages}
-        </span>
-        <button
-          className={`text-white bg-gold border-2 border-gold rounded-md w-24 py-2 hover:bg-white hover:text-gold hover:border-gold transition ease-in-out duration-300 active:scale-95 ${
-            currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          onClick={handleNext}
-          disabled={currentPage === totalPages}
-        >
-          Következő
-        </button>
       </div>
     </div>
   );

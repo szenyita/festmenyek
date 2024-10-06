@@ -30,7 +30,7 @@ const items = [
     id: 5,
     image:
       "https://images.pexels.com/photos/1258740/pexels-photo-1258740.jpeg?auto=compress&cs=tinysrgb&w=600",
-    name: "Impresszionizmus",
+    name: "Absztrakt",
   },
   {
     id: 6,

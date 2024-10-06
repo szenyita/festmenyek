@@ -48,18 +48,19 @@ export default function BelepoAlkotasok({
         {festmenyek?.map((item, index) => (
           <div
             key={item.festmenyId}
-            className={`border-gray-300 border-2 rounded-md overflow-hidden shadow-md md:w-2/5 w-4/5 xl:w-1/5 lg:w-2/5 mb-16 ${
-              index > 3 ? "hidden xl:block xl:mt-10" : ""
+            className={`border-gray-300 border-2 rounded-md overflow-hidden shadow-md md:w-2/5 w-4/5 2xl:w-1/5 lg:w-2/5 mb-16 ${
+              index > 3 ? "hidden 2xl:block 2xl:mt-10" : ""
             }`}
           >
             <Link href={`/termekek/${item.festmenyId}`}>
               <Image
                 src={item.kep}
                 alt=""
+                layout="responsive"
                 height={100}
                 width={100}
                 sizes="100vw"
-                className="w-full xl:w-[20vw] h-auto"
+                className="w-full"
               />
             </Link>
             <div className="pt-2 pb-4 px-4 flex flex-col gap-2">
