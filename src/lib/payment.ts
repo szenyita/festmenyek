@@ -6,22 +6,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function getClientSecret(
   amount: number,
-  orderData: {
-    vezeteknev: string | null;
-    keresztnev: string | null;
-    telefonszam: string | null;
-    varos: string | null;
-    iranyitoszam: string | null;
-    utca: string | null;
-    hazszam: string | null;
-    emelet: string | null;
-    ajto: string | null;
-    csengo: string | null;
-    festmenyIds: string[];
-  }
+  orderDataAsString: string
 ) {
-  const orderDataAsString = JSON.stringify(orderData);
-
   const paymentIntent = await stripe.paymentIntents.create({
     amount,
     currency: "HUF",

@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 type CartItem = {
   ar: number;
@@ -35,11 +36,20 @@ export default function CartProvider({
     return [];
   });
 
+  const pathname = usePathname();
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("cart", JSON.stringify(cart));
     }
   }, [cart]);
+
+  useEffect(() => {
+    if (pathname === "/sikeres-fizetes") {
+      setCart([]);
+      localStorage.removeItem("cart");
+    }
+  }, [pathname]);
 
   const addToCart = (item: CartItem) => {
     const itemExists = cart.some(

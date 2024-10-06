@@ -94,12 +94,12 @@ export default function SzemelyesAdatok() {
   const [keresztnev, setKeresztnev] = useState<string | null>();
   const [telefonszam, setTelefonszam] = useState<string | null>();
   const [varos, setVaros] = useState<string | null>();
-  const [iranyitoszam, setIranyitoszam] = useState<string | null>();
+  const [iranyitoszam, setIranyitoszam] = useState<number | null>();
   const [utca, setUtca] = useState<string | null>();
-  const [hazszam, setHazszam] = useState<string | null>();
-  const [emelet, setEmelet] = useState<string | null>();
-  const [ajto, setAjto] = useState<string | null>();
-  const [csengo, setCsengo] = useState<string | null>();
+  const [hazszam, setHazszam] = useState<number | null>();
+  const [emelet, setEmelet] = useState<number | null>();
+  const [ajto, setAjto] = useState<number | null>();
+  const [csengo, setCsengo] = useState<number | null>();
   const [paymemtSuccessMessage, setPaymemtSuccessMessage] = useState<
     string | null
   >();
@@ -143,7 +143,7 @@ export default function SzemelyesAdatok() {
       setPaymentPage(true);
       const clientSecretFetch = await getClientSecret(
         cartContext!.cart.reduce((sum, item) => sum + item.ar, 0),
-        orderData
+        JSON.stringify(orderData)
       );
       setClientSecret(clientSecretFetch);
     }
@@ -177,12 +177,12 @@ export default function SzemelyesAdatok() {
     setKeresztnev(felhasznaloAdatok?.keresztnev);
     setTelefonszam(felhasznaloAdatok?.telefonszam);
     setVaros(felhasznaloAdatok?.varos);
-    setIranyitoszam(felhasznaloAdatok?.iranyitoszam?.toString());
+    setIranyitoszam(felhasznaloAdatok?.iranyitoszam);
     setUtca(felhasznaloAdatok?.utca);
-    setHazszam(felhasznaloAdatok?.hazszam?.toString());
-    setEmelet(felhasznaloAdatok?.emelet?.toString());
-    setAjto(felhasznaloAdatok?.ajto?.toString());
-    setCsengo(felhasznaloAdatok?.csengo?.toString());
+    setHazszam(felhasznaloAdatok?.hazszam);
+    setEmelet(felhasznaloAdatok?.emelet);
+    setAjto(felhasznaloAdatok?.ajto);
+    setCsengo(felhasznaloAdatok?.csengo);
   };
 
   gettingPersonalData();
@@ -194,17 +194,17 @@ export default function SzemelyesAdatok() {
   });
 
   const orderData = {
-    felhasznaloId: context.contextFelhasznalo?.felhasznaloId,
-    vezeteknev: null,
-    keresztnev: null,
-    telefonszam: null,
-    varos: null,
-    iranyitoszam: null,
-    utca: null,
-    hazszam: null,
-    emelet: null,
-    ajto: null,
-    csengo: null,
+    felhasznaloId: context.contextFelhasznalo?.felhasznaloId || null,
+    vezeteknev: context.contextFelhasznalo?.vezeteknev || null,
+    keresztnev: context.contextFelhasznalo?.keresztnev || null,
+    telefonszam: context.contextFelhasznalo?.telefonszam || null,
+    varos: context.contextFelhasznalo?.varos || null,
+    iranyitoszam: context.contextFelhasznalo?.iranyitoszam || null,
+    utca: context.contextFelhasznalo?.utca || null,
+    hazszam: context.contextFelhasznalo?.hazszam || null,
+    emelet: context.contextFelhasznalo?.emelet || null,
+    ajto: context.contextFelhasznalo?.ajto || null,
+    csengo: context.contextFelhasznalo?.csengo || null,
     festmenyIds,
   };
 
@@ -231,8 +231,9 @@ export default function SzemelyesAdatok() {
             name="vezeteknev"
             type="text"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
-            defaultValue={vezeteknev || ""}
             required
+            onChange={(e) => setVezeteknev(e.target.value)}
+            value={vezeteknev || ""}
           />
           <label>Keresztnév</label>
           <input
@@ -240,8 +241,9 @@ export default function SzemelyesAdatok() {
             name="keresztnev"
             type="text"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
-            defaultValue={keresztnev || ""}
             required
+            onChange={(e) => setKeresztnev(e.target.value)}
+            value={keresztnev || ""}
           />
           <label>Telefonszám</label>
           <input
@@ -249,8 +251,9 @@ export default function SzemelyesAdatok() {
             name="telefonszam"
             type="text"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
-            defaultValue={telefonszam || ""}
             required
+            onChange={(e) => setTelefonszam(e.target.value)}
+            value={telefonszam || ""}
           />
         </div>
         <div className="lg:w-[48%]">
@@ -261,8 +264,9 @@ export default function SzemelyesAdatok() {
             name="varos"
             type="text"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
-            defaultValue={varos || ""}
             required
+            onChange={(e) => setVaros(e.target.value)}
+            value={varos || ""}
           />
           <label>Irányítószám</label>
           <input
@@ -270,8 +274,9 @@ export default function SzemelyesAdatok() {
             name="iranyitoszam"
             type="number"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            defaultValue={iranyitoszam || ""}
             required
+            onChange={(e) => setIranyitoszam(parseInt(e.target.value))}
+            value={iranyitoszam || ""}
           />
           <label>Utca</label>
           <input
@@ -279,8 +284,9 @@ export default function SzemelyesAdatok() {
             name="utca"
             type="text"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
-            defaultValue={utca || ""}
             required
+            onChange={(e) => setUtca(e.target.value)}
+            value={utca || ""}
           />
           <label>Házszám</label>
           <input
@@ -288,8 +294,9 @@ export default function SzemelyesAdatok() {
             name="hazszam"
             type="number"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            defaultValue={hazszam || ""}
             required
+            onChange={(e) => setHazszam(parseInt(e.target.value))}
+            value={hazszam || ""}
           />
           <label>Emelet</label>
           <input
@@ -297,7 +304,8 @@ export default function SzemelyesAdatok() {
             name="emelet"
             type="number"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            defaultValue={emelet || ""}
+            onChange={(e) => setEmelet(parseInt(e.target.value))}
+            value={emelet || ""}
           />
           <label>Ajtó</label>
           <input
@@ -305,7 +313,8 @@ export default function SzemelyesAdatok() {
             name="ajto"
             type="number"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            defaultValue={ajto || ""}
+            onChange={(e) => setAjto(parseInt(e.target.value))}
+            value={ajto || ""}
           />
           <label>Csengő</label>
           <input
@@ -313,7 +322,8 @@ export default function SzemelyesAdatok() {
             name="csengo"
             type="number"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            defaultValue={csengo || ""}
+            onChange={(e) => setCsengo(parseInt(e.target.value))}
+            value={csengo || ""}
           />
         </div>
         {successMessage && (

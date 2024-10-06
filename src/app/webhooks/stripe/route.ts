@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
     const charge = event.data.object;
     const orderDataAsString = charge.metadata.orderDataAsString;
     const orderData = JSON.parse(orderDataAsString);
-    const pricePaid = charge.amount;
 
     const {
       felhasznaloId,
@@ -46,7 +45,7 @@ export async function POST(req: NextRequest) {
         csengo: csengo || null,
         felhasznalo: { connect: { felhasznaloId } },
         festmenyek: {
-          connect: festmenyIds.map((id: number) => ({ festmenyId: id })),
+          connect: festmenyIds.map((id: string) => ({ festmenyId: id })),
         },
       },
     });
@@ -55,4 +54,6 @@ export async function POST(req: NextRequest) {
       data: { elerheto: false },
     });
   }
+
+  return new NextResponse();
 }
