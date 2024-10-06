@@ -2,9 +2,9 @@
 
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-export default async function page(amount: number) {
+export async function getClientSecret(amount: number) {
   const paymentIntent = await stripe.paymentIntents.create({
     amount,
     currency: "HUF",
