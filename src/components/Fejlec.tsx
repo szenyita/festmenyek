@@ -27,7 +27,7 @@ export default function Fejlec() {
             className=" text-2xl font-semibold flex gap-2"
           >
             <Image src="/logo.svg" alt="logo" width={30} height={30} />
-            <h1 className="flex-shrink-0">Anonim Művészek</h1>
+            <h1 className="flex-shrink-0">Anonim Műcsarnok</h1>
           </Link>
           {context.contextFelhasznalo?.jogosultsag === "Admin" && (
             <Link href="/admin">
@@ -36,7 +36,7 @@ export default function Fejlec() {
                 alt=""
                 width={26}
                 height={26}
-                className="cursor-pointer mr-4 md:mr-6"
+                className="cursor-pointer mr-4 md:mr-6 hidden lg:block"
               />
             </Link>
           )}

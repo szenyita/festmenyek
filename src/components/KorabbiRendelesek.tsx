@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import { getPreviousOrders } from "@/lib/rendelesKezeles";
+import { useRouter } from "next/navigation";
 
 type Rendeles = {
   rendelesId: string;
@@ -59,8 +60,10 @@ export default function KorabbiRendelesek() {
     fetchRendelesek();
   }, [context]);
 
+  const router = useRouter();
+
   if (!context?.contextFelhasznalo) {
-    return <div>Loading...</div>;
+    router.push("/bejelentkezes");
   }
 
   return (
@@ -68,11 +71,15 @@ export default function KorabbiRendelesek() {
       <h1 className="mb-3 mt-10 md:mt-5 font-semibold text-lg">
         Korábbi Rendelések
       </h1>
-      <div className="grid grid-cols-3 gap-2 py-1 px-2 bg-black text-white rounded-t-md border-black border-t-2 border-l-2 border-r-2">
-        <div>Azonosító</div>
-        <div>Végösszeg</div>
-        <div>Dátum</div>
-      </div>
+      {rendelesek.length > 0 ? (
+        <div className="grid grid-cols-3 gap-2 py-1 px-2 bg-black text-white rounded-t-md border-black border-t-2 border-l-2 border-r-2">
+          <div>Azonosító</div>
+          <div>Végösszeg</div>
+          <div>Dátum</div>
+        </div>
+      ) : (
+        <p>Nincsenek korábbi rendelések</p>
+      )}
       {rendelesek.map((rendeles) => (
         <div
           key={rendeles.rendelesId}

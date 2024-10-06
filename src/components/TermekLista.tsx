@@ -126,7 +126,7 @@ export function TermekListaKomponens() {
   };
 
   return (
-    <div className="mx-8 md:mx-16 lg:mx-20 xl:mx-28 2xl:mx-40">
+    <div className="mx-8 md:mx-16 lg:mx-20 xl:mx-28 2xl:mx-40 min-h-[calc(100vh-48px-64px-192px-80px)]">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-8 md:mt-32 lgx:mt-20 gap-6 items-center">
         {filteredItems.map((item) => (
           <div

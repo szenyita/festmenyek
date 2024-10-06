@@ -57,7 +57,7 @@ export default function Bejelentkezes({
   return (
     <form
       action={handleSubmit}
-      className="flex flex-col items-center mt-6 sm:mt-24 mb-60"
+      className="flex flex-col items-center pt-6 sm:mt-24 min-h-[calc(100vh-400px)]"
     >
       <div className="flex flex-col sm:border-2 pt-12 px-12 pb-16 rounded-lg">
         <h1 className="mb-5 font-semibold text-lg">Bejelentkezés</h1>

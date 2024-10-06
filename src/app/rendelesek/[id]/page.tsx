@@ -74,7 +74,7 @@ export default function Rendelesek() {
   }
 
   return (
-    <div className="mt-6 mx-12 mb-auto flex flex-col min-h-[calc(100vh-280px)] lg:w-[660px] lg:mx-auto lg:mt-16">
+    <div className="mt-6 mx-12 mb-auto flex flex-col min-h-[calc(100vh-368px)] lg:w-[660px] lg:mx-auto lg:mt-16">
       <div className="mb-6 text-lg ">
         <p className="font-semibold">Rendelés Azonosító</p>
         <p>{rendeles.rendelesId}</p>

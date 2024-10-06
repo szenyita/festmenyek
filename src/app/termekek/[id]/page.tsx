@@ -21,15 +21,15 @@ export default async function Termek({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center md:items-start lg:mt-12 lg:mb-12">
+    <div className="flex flex-col lg:flex-row items-center justify-center lg:mt-12 lg:mb-12 min-h-[calc(100vh-64px-192px-96px)]">
       <div className="flex flex-col mt-5 md:mb-12 w-[300px] lg:w-[600px]">
-        <div className="mb-2">
+        <div className="border-gray-300 border-2 rounded-md overflow-hidden shadow-md h-fit mb-2">
           <Image
             src={festmeny?.kep!}
             alt=""
             width={600}
             height={400}
-            className="rounded-lg w-full aspect-[3/2] object-cover]"
+            className="w-full aspect-[3/2] object-cover]"
           />
         </div>
         <div className="flex flex-wrap justify-between"></div>
@@ -38,7 +38,10 @@ export default async function Termek({ params }: { params: { id: string } }) {
         <h1 className="text-xl lg:text-2xl mb-1 lg:mb-4 font-semibold">
           {festmeny!.nev}
         </h1>
-        <p className="text-gray-400 lg:text-md">{festmeny!.leiras}</p>
+        <p className="text-gray-500 lg:text-md">{festmeny!.leiras}</p>
+        <p className="lg:text-md mt-2">Stílus: {festmeny!.stilus}</p>
+        <p className="lg:text-md">Év: {festmeny!.ev}</p>
+        <p className="lg:text-md">Méret: {festmeny!.meret}</p>
         <p className="font-semibold mt-4 lg:text-lg">
           {formatPrice(festmeny!.ar)}
         </p>

@@ -10,8 +10,8 @@ import AuthProvider from "@/context/AuthContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Anonim Művészek",
-  description: "Legjobb polók",
+  title: "Anonim Művécsarnok",
+  description: "Magyar alkotások",
 };
 
 export default function RootLayout({

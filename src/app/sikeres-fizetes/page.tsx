@@ -12,8 +12,12 @@ export default async function page({
   );
 
   if (paymentIntent.status !== "succeeded") {
-    return <div>Sikertelen fizetés</div>;
+    return <div className="text-red-500">Sikertelen fizetés</div>;
   }
 
-  return <div>Sikeres fizetés</div>;
+  return (
+    <div className="text-green-500 min-h-[calc(100vh-304px)] flex justify-center pt-[20vh] font-semibold text-xl">
+      Sikeres fizetés
+    </div>
+  );
 }

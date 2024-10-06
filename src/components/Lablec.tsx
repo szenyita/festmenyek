@@ -21,7 +21,7 @@ export default function Lablec() {
         {/*LOGO*/}
         <div className="flex items-center justify-center gap-">
           <Image src="/logo.svg" alt="logo" width={30} height={30} />
-          <p className="font-semibold text-2xl">Anonim Művészek</p>
+          <p className="font-semibold text-2xl">Anonim Műcsarnok</p>
         </div>
         {/*SOCIAL*/}
         <div className="flex items-center justify-center gap-2">
