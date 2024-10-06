@@ -142,7 +142,8 @@ export default function SzemelyesAdatok() {
       */
       setPaymentPage(true);
       const clientSecretFetch = await getClientSecret(
-        cartContext!.cart.reduce((sum, item) => sum + item.ar, 0)
+        cartContext!.cart.reduce((sum, item) => sum + item.ar, 0),
+        orderData
       );
       setClientSecret(clientSecretFetch);
     }
@@ -186,6 +187,27 @@ export default function SzemelyesAdatok() {
 
   gettingPersonalData();
 
+  const festmenyIds: string[] = [];
+
+  cartContext?.cart.forEach((item) => {
+    festmenyIds.push(item.festmenyId);
+  });
+
+  const orderData = {
+    felhasznaloId: context.contextFelhasznalo?.felhasznaloId,
+    vezeteknev: null,
+    keresztnev: null,
+    telefonszam: null,
+    varos: null,
+    iranyitoszam: null,
+    utca: null,
+    hazszam: null,
+    emelet: null,
+    ajto: null,
+    csengo: null,
+    festmenyIds,
+  };
+
   return (
     <>
       {paymentPage && <Payment clientSecret={clientSecret} />}
@@ -210,6 +232,7 @@ export default function SzemelyesAdatok() {
             type="text"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
             defaultValue={vezeteknev || ""}
+            required
           />
           <label>Keresztnév</label>
           <input
@@ -218,6 +241,7 @@ export default function SzemelyesAdatok() {
             type="text"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
             defaultValue={keresztnev || ""}
+            required
           />
           <label>Telefonszám</label>
           <input
@@ -226,6 +250,7 @@ export default function SzemelyesAdatok() {
             type="text"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
             defaultValue={telefonszam || ""}
+            required
           />
         </div>
         <div className="lg:w-[48%]">
@@ -237,6 +262,7 @@ export default function SzemelyesAdatok() {
             type="text"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
             defaultValue={varos || ""}
+            required
           />
           <label>Irányítószám</label>
           <input
@@ -245,6 +271,7 @@ export default function SzemelyesAdatok() {
             type="number"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             defaultValue={iranyitoszam || ""}
+            required
           />
           <label>Utca</label>
           <input
@@ -253,6 +280,7 @@ export default function SzemelyesAdatok() {
             type="text"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
             defaultValue={utca || ""}
+            required
           />
           <label>Házszám</label>
           <input
@@ -261,6 +289,7 @@ export default function SzemelyesAdatok() {
             type="number"
             className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             defaultValue={hazszam || ""}
+            required
           />
           <label>Emelet</label>
           <input
