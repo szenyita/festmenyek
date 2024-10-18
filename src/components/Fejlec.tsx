@@ -48,6 +48,23 @@ export default function Fejlec() {
             <Menu />
           </div>
         )}
+        {context.contextFelhasznalo?.jogosultsag === "Szallito" && (
+          <div
+            className="w-2/3 flex justify-end"
+            onClick={() => {
+              context.setContextFelhasznalo(null);
+              context.setContextToken(null);
+            }}
+          >
+            <Image
+              src="/kijelentkezes.svg"
+              alt=""
+              width={26}
+              height={26}
+              className="cursor-pointer mr-4 md:mr-6"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

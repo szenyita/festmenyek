@@ -11,6 +11,10 @@ export async function registerUser(formData: FormData) {
   const jelszo = formData.get("jelszo") as string;
   const megerositettJelszo = formData.get("megerositettJelszo") as string;
 
+  if (!email || !jelszo) {
+    return { uresMezoError: "Töltse ki a megadott mezőket" };
+  }
+
   if (!isEmail(email)) {
     return { emailError: "Érvénytelen email cím" };
   }
@@ -54,6 +58,10 @@ export async function loginUser(formData: FormData) {
       expiresIn: "7d",
     });
   };
+
+  if (!email || !jelszo) {
+    return { uresMezoError: "Töltse ki a megadott mezőket" };
+  }
 
   if (!isEmail(email)) {
     return { emailError: "Érvénytelen email cím" };

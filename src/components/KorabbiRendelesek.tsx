@@ -44,15 +44,19 @@ function formatCurrency(number: number) {
 
 export default function KorabbiRendelesek() {
   const [rendelesek, setRendelesek] = useState<Rendeles[]>([]);
+  const [noPrev, setNoPrev] = useState("");
   const context = useContext(AuthContext);
+
   useEffect(() => {
     const fetchRendelesek = async () => {
       if (context?.contextFelhasznalo) {
         const rendelesek = await getPreviousOrders(
           context.contextFelhasznalo.felhasznaloId
         );
-        if (rendelesek) {
+        if (rendelesek.length > 0) {
           setRendelesek(rendelesek);
+        } else {
+          setNoPrev("Nincsenek korábbi rendelések.");
         }
       }
     };
@@ -78,7 +82,7 @@ export default function KorabbiRendelesek() {
           <div>Dátum</div>
         </div>
       ) : (
-        <p>Nincsenek korábbi rendelések</p>
+        <p>{noPrev}</p>
       )}
       {rendelesek.map((rendeles) => (
         <div
@@ -95,7 +99,7 @@ export default function KorabbiRendelesek() {
                 rendeles.festmenyek.reduce((a, b) => a + b.ar, 0)
               )}
             </div>
-            <div>{rendeles.datum.toString()}</div>
+            <div>{rendeles.datum.toLocaleDateString("hu-HU")}</div>
           </Link>
         </div>
       ))}

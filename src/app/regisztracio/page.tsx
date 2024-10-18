@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export default function Regisztracio() {
   const [emailError, setEmailError] = useState<string | null>();
+  const [uresMezoError, setUresMezoError] = useState<string | null>();
   const [letezoFelhasznaloError, setLetezoFelhasznaloError] = useState<
     string | null
   >();
@@ -18,6 +19,7 @@ export default function Regisztracio() {
   const handleSubmit = async (formData: FormData) => {
     const {
       emailError,
+      uresMezoError,
       letezoFelhasznaloError,
       jelszoErossegError,
       megerositettJelszoError,
@@ -25,6 +27,7 @@ export default function Regisztracio() {
     } = await registerUser(formData);
 
     setEmailError(emailError);
+    setUresMezoError(uresMezoError);
     setLetezoFelhasznaloError(letezoFelhasznaloError);
     setJelszoErossegError(jelszoErossegError);
     setMegerositettJelszoError(megerositettJelszoError);
@@ -44,7 +47,6 @@ export default function Regisztracio() {
           name="email"
           className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
           type="email"
-          required
         />
         {emailError && <p className="text-red-500">{emailError}</p>}
         {letezoFelhasznaloError && (
@@ -56,7 +58,6 @@ export default function Regisztracio() {
           name="jelszo"
           className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
           type="password"
-          required
         />
         {jelszoErossegError && (
           <p className="text-red-500">{jelszoErossegError}</p>
@@ -67,8 +68,8 @@ export default function Regisztracio() {
           name="megerositettJelszo"
           className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
           type="password"
-          required
-        />
+        />{" "}
+        {uresMezoError && <p className="text-red-500">{uresMezoError}</p>}
         {megerositettJelszoError && (
           <p className="text-red-500">{megerositettJelszoError}</p>
         )}

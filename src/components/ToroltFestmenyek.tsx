@@ -1,35 +1,24 @@
-"use client";
-
 import Image from "next/image";
 import { getDeletedFestmeny } from "@/lib/festmenyKezeles";
-import { useEffect, useState } from "react";
 import { Meret, Stilus } from "@prisma/client";
 
-export default function ToroltFestmenyek() {
-  const [festmenyek, setFestmenyek] = useState<
-    {
-      festmenyId: string;
-      nev: string;
-      kep: string;
-      ar: number;
-      leiras: string;
-      stilus: Stilus;
-      ev: number;
-      meret: Meret;
-      datum: Date;
-      elerheto: boolean;
-      rendelesId: string | null;
-    }[]
-  >([]);
+export default async function ToroltFestmenyek() {
+  type Festmenyek = {
+    festmenyId: string;
+    nev: string;
+    kep: string;
+    ar: number;
+    leiras: string;
+    stilus: Stilus;
+    ev: number;
+    meret: Meret;
+    datum: Date;
+    elerheto: boolean;
+    rendelesId: string | null;
+  }[];
+  [];
 
-  const gettingDeletedFestmeny = async () => {
-    const festmenyek = await getDeletedFestmeny();
-    setFestmenyek(festmenyek);
-  };
-
-  useEffect(() => {
-    gettingDeletedFestmeny();
-  }, []);
+  const festmenyek: Festmenyek = await getDeletedFestmeny();
 
   const formatPrice = (price: number) => {
     return (

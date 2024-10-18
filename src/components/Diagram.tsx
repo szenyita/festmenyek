@@ -1,5 +1,3 @@
-"use client";
-
 import {
   LineChart,
   Line,
@@ -11,25 +9,9 @@ import {
 } from "recharts";
 
 import { getRevenue } from "@/lib/rendelesKezeles";
-import { useState, useEffect } from "react";
 
-type Ertekesites = {
-  date: string;
-  totalAr: number;
-};
-
-export default function Diagram() {
-  const [data, setData] = useState<Ertekesites[]>([]);
-
-  const gettingData = async () => {
-    const data = await getRevenue();
-    console.log(data);
-    setData(data);
-  };
-
-  useEffect(() => {
-    gettingData();
-  }, []);
+export default async function Diagram() {
+  const data = await getRevenue();
 
   const formatCurrency = (value: number) => `${value.toLocaleString()} Ft`;
 

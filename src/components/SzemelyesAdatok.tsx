@@ -213,118 +213,122 @@ export default function SzemelyesAdatok() {
       {paymentPage && <Payment clientSecret={clientSecret} />}
       <form
         action={handleSubmit}
-        className="mx-12 sm:mx-24 md:mx-60 lg:mx-12 lg:w-1/3 lg:flex lg:flex-wrap lg:justify-between"
+        className="mx-12 sm:mx-24 md:mx-60 lg:mx-12 lg:w-1/3  "
       >
-        <div className="lg:w-[48%]">
-          <h1 className="mb-3 mt-5 font-semibold text-lg">Személyes Adatok</h1>
-          <input
-            type="text"
-            id="felhasznaloId"
-            name="felhasznaloId"
-            value={context.contextFelhasznalo?.felhasznaloId}
-            className="hidden"
-            readOnly
-          />
-          <label>Vezetéknév</label>
-          <input
-            id="vezeteknev"
-            name="vezeteknev"
-            type="text"
-            className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
-            required
-            onChange={(e) => setVezeteknev(e.target.value)}
-            value={vezeteknev || ""}
-          />
-          <label>Keresztnév</label>
-          <input
-            id="keresztnev"
-            name="keresztnev"
-            type="text"
-            className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
-            required
-            onChange={(e) => setKeresztnev(e.target.value)}
-            value={keresztnev || ""}
-          />
-          <label>Telefonszám</label>
-          <input
-            id="telefonszam"
-            name="telefonszam"
-            type="text"
-            className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
-            required
-            onChange={(e) => setTelefonszam(e.target.value)}
-            value={telefonszam || ""}
-          />
-        </div>
-        <div className="lg:w-[48%]">
-          <h1 className="mb-3 font-semibold text-lg mt-5">Cím</h1>
-          <label>Város</label>
-          <input
-            id="varos"
-            name="varos"
-            type="text"
-            className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
-            required
-            onChange={(e) => setVaros(e.target.value)}
-            value={varos || ""}
-          />
-          <label>Irányítószám</label>
-          <input
-            id="iranyitoszam"
-            name="iranyitoszam"
-            type="number"
-            className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            required
-            onChange={(e) => setIranyitoszam(parseInt(e.target.value))}
-            value={iranyitoszam || ""}
-          />
-          <label>Utca</label>
-          <input
-            id="utca"
-            name="utca"
-            type="text"
-            className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
-            required
-            onChange={(e) => setUtca(e.target.value)}
-            value={utca || ""}
-          />
-          <label>Házszám</label>
-          <input
-            id="hazszam"
-            name="hazszam"
-            type="number"
-            className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            required
-            onChange={(e) => setHazszam(parseInt(e.target.value))}
-            value={hazszam || ""}
-          />
-          <label>Emelet</label>
-          <input
-            id="emelet"
-            name="emelet"
-            type="number"
-            className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            onChange={(e) => setEmelet(parseInt(e.target.value))}
-            value={emelet || ""}
-          />
-          <label>Ajtó</label>
-          <input
-            id="ajto"
-            name="ajto"
-            type="number"
-            className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            onChange={(e) => setAjto(parseInt(e.target.value))}
-            value={ajto || ""}
-          />
-          <label>Csengő</label>
-          <input
-            id="csengo"
-            name="csengo"
-            type="number"
-            className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            onChange={(e) => setCsengo(parseInt(e.target.value))}
-            value={csengo || ""}
-          />
+        <div className="lg:flex lg:flex-wrap lg:justify-between">
+          <div className="lg:w-[48%]">
+            <h1 className="mb-3 mt-5 font-semibold text-lg">
+              Személyes Adatok
+            </h1>
+            <input
+              type="text"
+              id="felhasznaloId"
+              name="felhasznaloId"
+              value={context.contextFelhasznalo?.felhasznaloId}
+              className="hidden"
+              readOnly
+            />
+            <label>Vezetéknév</label>
+            <input
+              id="vezeteknev"
+              name="vezeteknev"
+              type="text"
+              className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
+              required
+              onChange={(e) => setVezeteknev(e.target.value)}
+              value={vezeteknev || ""}
+            />
+            <label>Keresztnév</label>
+            <input
+              id="keresztnev"
+              name="keresztnev"
+              type="text"
+              className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
+              required
+              onChange={(e) => setKeresztnev(e.target.value)}
+              value={keresztnev || ""}
+            />
+            <label>Telefonszám</label>
+            <input
+              id="telefonszam"
+              name="telefonszam"
+              type="text"
+              className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
+              required
+              onChange={(e) => setTelefonszam(e.target.value)}
+              value={telefonszam || ""}
+            />
+          </div>
+          <div className="lg:w-[48%]">
+            <h1 className="mb-3 font-semibold text-lg mt-5">Cím</h1>
+            <label>Város</label>
+            <input
+              id="varos"
+              name="varos"
+              type="text"
+              className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
+              required
+              onChange={(e) => setVaros(e.target.value)}
+              value={varos || ""}
+            />
+            <label>Irányítószám</label>
+            <input
+              id="iranyitoszam"
+              name="iranyitoszam"
+              type="number"
+              className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              required
+              onChange={(e) => setIranyitoszam(parseInt(e.target.value))}
+              value={iranyitoszam || ""}
+            />
+            <label>Utca</label>
+            <input
+              id="utca"
+              name="utca"
+              type="text"
+              className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
+              required
+              onChange={(e) => setUtca(e.target.value)}
+              value={utca || ""}
+            />
+            <label>Házszám</label>
+            <input
+              id="hazszam"
+              name="hazszam"
+              type="number"
+              className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              required
+              onChange={(e) => setHazszam(parseInt(e.target.value))}
+              value={hazszam || ""}
+            />
+            <label>Emelet</label>
+            <input
+              id="emelet"
+              name="emelet"
+              type="number"
+              className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              onChange={(e) => setEmelet(parseInt(e.target.value))}
+              value={emelet || ""}
+            />
+            <label>Ajtó</label>
+            <input
+              id="ajto"
+              name="ajto"
+              type="number"
+              className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              onChange={(e) => setAjto(parseInt(e.target.value))}
+              value={ajto || ""}
+            />
+            <label>Csengő</label>
+            <input
+              id="csengo"
+              name="csengo"
+              type="number"
+              className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              onChange={(e) => setCsengo(parseInt(e.target.value))}
+              value={csengo || ""}
+            />
+          </div>
         </div>
         {successMessage && (
           <p className="font-semibold text-green-500">{successMessage}</p>
@@ -343,7 +347,7 @@ export default function SzemelyesAdatok() {
         {pathname === "/fiok" && (
           <button
             type="submit"
-            className="lg:mb-16 bg-black text-white w-full border-2 border-black mt-4 rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95"
+            className="lg:mb-16 bg-black text-white w-full border-2 border-black mt-4 rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95 h-14"
           >
             Módosít
           </button>

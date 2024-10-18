@@ -68,6 +68,7 @@ export async function getPreviousOrders(felhasznaloId: string) {
   const rendelesek = await prisma.rendeles.findMany({
     where: { felhasznaloId },
     include: { festmenyek: true },
+    orderBy: { datum: "desc" },
   });
 
   return rendelesek;

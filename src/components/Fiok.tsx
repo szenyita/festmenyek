@@ -21,13 +21,11 @@ export default function Fiok({
     >
       {context.contextFelhasznalo && (
         <div>
-          <Link
-            href="/fiok"
-            className="hover:text-gold active:scale-95 transition ease-in-out duration-300 cursor-pointer"
-            onClick={() => setProfileOpen(false)}
-          >
-            Fiók
-          </Link>
+          <p className="hover:text-gold active:scale-95 transition ease-in-out duration-300 cursor-pointer">
+            <Link href="/fiok" onClick={() => setProfileOpen(false)}>
+              Fiók
+            </Link>
+          </p>
           <p
             onClick={() => {
               context.setContextFelhasznalo(null);

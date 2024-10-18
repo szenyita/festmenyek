@@ -12,6 +12,7 @@ export default function Bejelentkezes({
   searchParams: { redirect: string };
 }) {
   const [emailError, setEmailError] = useState<string | null>();
+  const [uresMezoError, setUresMezoError] = useState<string | null>();
   const [bejelentkezesError, setBejelentkezesError] = useState<string | null>();
   const [error, setError] = useState<string | null>();
 
@@ -30,9 +31,16 @@ export default function Bejelentkezes({
   } = context;
 
   const handleSubmit = async (formData: FormData) => {
-    const { emailError, bejelentkezesError, error, felhasznalo, token } =
-      await loginUser(formData);
+    const {
+      emailError,
+      uresMezoError,
+      bejelentkezesError,
+      error,
+      felhasznalo,
+      token,
+    } = await loginUser(formData);
     setEmailError(emailError);
+    setUresMezoError(uresMezoError);
     setBejelentkezesError(bejelentkezesError);
     setError(error);
     console.log(token);
@@ -79,7 +87,7 @@ export default function Bejelentkezes({
           className="border-2 border-gray-300 w-full rounded-md py-1 px-2 mb-2"
           type="password"
         />
-
+        {uresMezoError && <p className="text-red-500">{uresMezoError}</p>}
         {bejelentkezesError && (
           <p className="text-red-500">{bejelentkezesError}</p>
         )}
