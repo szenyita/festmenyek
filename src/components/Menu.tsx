@@ -8,7 +8,7 @@ import { useContext, useState } from "react";
 export default function Menu() {
   const [open, setOpen] = useState(false);
   const handleClick = () => {
-    setTimeout(() => setOpen((prev) => !prev), 200);
+    setTimeout(() => setOpen((prev) => !prev), 300);
   };
 
   const context = useContext(AuthContext);

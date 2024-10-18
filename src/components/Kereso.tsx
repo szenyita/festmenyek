@@ -40,6 +40,12 @@ export function Kereses() {
     }
   }, [search, searchParams, router, pathname]);
 
+  useEffect(() => {
+    if (!pathname.startsWith("/termekek")) {
+      setSearch("");
+    }
+  }, [pathname]);
+
   return (
     <form
       className="w-1/2 lg:w-2/3 hidden md:flex rounded-md px-4 py-2 bg-white"

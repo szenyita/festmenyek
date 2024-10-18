@@ -119,6 +119,9 @@ export default function SzemelyesAdatok() {
       const message = await addPersonalData(formData);
       if (message.successMessage) {
         setSuccessMessage(message.successMessage);
+        setTimeout(() => {
+          setSuccessMessage(null);
+        }, 3000);
       } else {
         setErrorMessage(message.errorMessage);
       }
@@ -350,7 +353,7 @@ export default function SzemelyesAdatok() {
         {pathname === "/fiok" && (
           <button
             type="submit"
-            className="lg:mb-16 bg-black text-white w-full border-2 border-black mt-4 rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95 h-14"
+            className="lg:mb-16 bg-black text-white w-full border-2 border-black mt-4 rounded-md px-4 py-2 hover:bg-white hover:text-black transition ease-in-out duration-300 active:scale-95"
           >
             Módosít
           </button>
