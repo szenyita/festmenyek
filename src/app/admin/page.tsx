@@ -21,7 +21,7 @@ export default function TermekKezeles() {
   }
 
   return (
-    <div>
+    <div className="min-h-[calc(100vh-64px-250px)]">
       <Suspense
         fallback={
           <div className="flex flex-col items-center mx-[9vw] border-2 rounded-lg mt-8 py-6">

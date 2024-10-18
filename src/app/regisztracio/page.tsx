@@ -37,7 +37,7 @@ export default function Regisztracio() {
   return (
     <form
       action={handleSubmit}
-      className="flex flex-col items-center pt-6 sm:mt-24 min-h-[calc(100vh-400px)]"
+      className="flex flex-col items-center pt-6 sm:pt-12 md:pt-20 min-h-[calc(100vh-64px-242px)]"
     >
       <div className="flex flex-col sm:border-2 pt-12 pb-16 px-12 rounded-lg">
         <h1 className="mb-5 font-semibold text-lg">Regisztráció</h1>
@@ -85,7 +85,7 @@ export default function Regisztracio() {
         </p>
         <Link
           href="/bejelentkezes"
-          className="flex justify-center bg-gray-400 border-2 border-gray-400 text-white rounded-md py-2 hover:bg-white hover:text-gray-400 active:scale-95 transition ease-in-out duration-300"
+          className="flex justify-center bg-gray-500 border-2 border-gray-500 text-white rounded-md py-2 hover:bg-white hover:text-gray-500 active:scale-95 transition ease-in-out duration-300"
         >
           Bejelentkezés
         </Link>

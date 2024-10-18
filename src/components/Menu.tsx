@@ -8,7 +8,7 @@ import { useContext, useState } from "react";
 export default function Menu() {
   const [open, setOpen] = useState(false);
   const handleClick = () => {
-    setOpen((prev) => !prev);
+    setTimeout(() => setOpen((prev) => !prev), 200);
   };
 
   const context = useContext(AuthContext);
@@ -24,7 +24,7 @@ export default function Menu() {
         width={30}
         height={30}
         className="cursor-pointer"
-        onClick={handleClick}
+        onClick={() => setOpen((prev) => !prev)}
       />
       {open && (
         <div className="bg-black text-white absolute top-16 left-0 w-full h-[calc(100vh-4rem)] flex flex-col items-center justify-around text-lg py-20">

@@ -24,11 +24,13 @@ export default function Fejlec() {
                 ? "/szallito"
                 : "/"
             }`}
-            className=" text-2xl font-semibold flex gap-2"
+            className="flex-shrink-0"
           >
             <Image src="/logo.svg" alt="logo" width={30} height={30} />
-            <h1 className="flex-shrink-0">Anonim Műcsarnok</h1>
           </Link>
+          <h1 className="flex-shrink-0 text-2xl font-semibold flex gap-2">
+            Anonim Műcsarnok
+          </h1>
           {context.contextFelhasznalo?.jogosultsag === "Admin" && (
             <Link href="/admin">
               <Image

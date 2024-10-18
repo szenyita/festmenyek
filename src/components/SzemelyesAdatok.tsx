@@ -2,7 +2,7 @@
 
 import { addPersonalData, getPersonalData } from "@/lib/felhasznaloAdatok";
 import { AuthContext } from "@/context/AuthContext";
-import { FormEvent, useContext } from "react";
+import { FormEvent, useContext, useEffect } from "react";
 import { useState } from "react";
 import { CartContext } from "@/context/CartContext";
 import { addOrder } from "@/lib/rendelesKezeles";
@@ -85,6 +85,11 @@ const Form = () => {
 };
 
 export default function SzemelyesAdatok() {
+  useEffect(() => {
+    gettingPersonalData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [paymentPage, setPaymentPage] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
 
@@ -184,8 +189,6 @@ export default function SzemelyesAdatok() {
     setAjto(felhasznaloAdatok?.ajto);
     setCsengo(felhasznaloAdatok?.csengo);
   };
-
-  gettingPersonalData();
 
   const festmenyIds: string[] = [];
 

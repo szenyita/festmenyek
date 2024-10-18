@@ -178,8 +178,13 @@ export default function SzallitasKezeles() {
     );
   } else {
     return (
-      <div className="h-[calc(100vh-192px-64px)] flex justify-center pt-20 font-semibold">
-        Nincsenek aktív rendelések
+      <div className="h-[calc(100vh-192px-64px)]">
+        <div className="mx-12 sm:mx-24 md:mx-60 lg:mx-12 mb-12 lg:w-1/3">
+          <h1 className="mb-3 mt-10 md:mt-5 font-semibold text-lg">
+            Aktív Rendelések
+          </h1>
+          <p>Nincsenek aktív rendelések</p>
+        </div>
       </div>
     );
   }

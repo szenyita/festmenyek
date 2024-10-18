@@ -71,7 +71,9 @@ export default function FejlecIkonok() {
                     className="cursor-pointer"
                     onClick={() => {
                       removeFromCart(item.festmenyId);
-                      setCartOpen(false);
+                      if (!cart.length) {
+                        setCartOpen(false);
+                      }
                     }}
                   >
                     <Image

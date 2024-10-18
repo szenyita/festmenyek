@@ -151,7 +151,7 @@ export function TermekListaKomponens() {
             <div className="pt-2 pb-4 px-4 flex flex-col gap-2">
               <div className="flex justify-between items-start font-semibold">
                 <p className="text-lg">{item.nev}</p>
-                <p>{formatPrice(item.ar)}</p>
+                <p className="text-nowrap pl-2">{formatPrice(item.ar)}</p>
               </div>
               <div className="flex gap-6 justify-between items-start">
                 <p className="text-sm text-gray-400">{item.stilus}</p>
