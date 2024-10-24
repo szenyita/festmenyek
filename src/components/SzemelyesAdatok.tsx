@@ -5,7 +5,6 @@ import { AuthContext } from "@/context/AuthContext";
 import { FormEvent, useContext, useEffect } from "react";
 import { useState } from "react";
 import { CartContext } from "@/context/CartContext";
-import { addOrder } from "@/lib/rendelesKezeles";
 import { usePathname, useRouter } from "next/navigation";
 
 import {
@@ -16,7 +15,6 @@ import {
 } from "@stripe/react-stripe-js";
 import { getClientSecret } from "@/lib/payment";
 import { loadStripe } from "@stripe/stripe-js";
-import { error } from "console";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
