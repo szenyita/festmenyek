@@ -23,7 +23,7 @@ export async function addFestmeny(formData: FormData) {
   const buffer = Buffer.from(bytes);
 
   await fs.mkdir(`public/kepek`, { recursive: true });
-  const pathName = `/kepek/${crypto.randomUUID()}`;
+  const pathName = `/kepek/${crypto.randomUUID()}.jpg`;
   await fs.writeFile(`public${pathName}`, buffer);
 
   const ev = parseInt(stringEv);
