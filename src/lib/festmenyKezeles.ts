@@ -109,7 +109,7 @@ export async function updateFestmeny(formData: FormData) {
 
     await fs.mkdir(`public/kepek`, { recursive: true });
     unlinkSync(`public${prev!.kep}`);
-    pathName = `/kepek/${crypto.randomUUID()}`;
+    pathName = `/kepek/${crypto.randomUUID()}.jpg`;
     await fs.writeFile(`public${pathName}`, buffer);
   }
 
