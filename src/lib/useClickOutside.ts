@@ -5,15 +5,19 @@ export const useClickOutside = () => {
   const [visible, setVisible] = useState(false);
 
   const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+
     if (
       ref.current &&
-      !ref.current.contains(event.target as Node) &&
-      !["BUTTON", "IMG", "INPUT"].includes(
-        (event.target as HTMLElement).tagName
-      )
+      !ref.current.contains(target as Node) &&
+      (target.hasAttribute("data-click-outside-ignore") ||
+        !["BUTTON", "IMG", "INPUT"].includes(target.tagName))
     ) {
       setVisible(false);
       console.log((event.target as HTMLElement).tagName);
+      console.log(
+        (event.target as HTMLElement).getAttribute("data-click-outside-ignore")
+      );
     }
   };
 

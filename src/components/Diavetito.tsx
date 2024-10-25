@@ -11,15 +11,16 @@ const slide = {
 };
 export default function Diavetito() {
   return (
-    <div className="h-[calc(100vh-4rem)]  relative">
-      <div className="w-full">
-        <div className="flex-1">
+    <div className="h-[calc(100vh-4rem)]  relative" data-click-outside-ignore>
+      <div className="w-full" data-click-outside-ignore>
+        <div className="flex-1" data-click-outside-ignore>
           <Image
             src={slide.image}
             alt=""
             fill={true}
             quality={100}
             className="object-cover object-center block"
+            data-click-outside-ignore
           />
           <div className="text-white text-shadow-outline font-semibold absolute flex flex-col gap-2 justify-center items-center bottom-[20vh] left-0 right-0 md:text-xl md:gap-6 xl:text-2xl">
             <p>{slide.description}</p>
