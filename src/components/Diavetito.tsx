@@ -6,7 +6,7 @@ const slide = {
   image:
     "https://images.pexels.com/photos/428111/pexels-photo-428111.jpeg?auto=compress&cs=tinysrgb&w=600",
   description: "Vásároljon anonim festményeket",
-  title: "Magyar művészktől",
+  title: "Magyar művészektől",
   button: "Alkotások megtekintése",
 };
 export default function Diavetito() {
